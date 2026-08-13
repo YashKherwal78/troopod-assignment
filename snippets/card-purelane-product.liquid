@@ -82,12 +82,12 @@
   {%- if card_product.available -%}
     {%- form 'product', card_product, class: 'pl-card__form' -%}
       <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-      <button type="submit" name="add" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full">
+      <button type="submit" name="add" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" aria-label="{{ 'products.product.add_to_cart' | t }} — {{ card_product.title | escape }}">
         {{ 'products.product.add_to_cart' | t }}
       </button>
     {%- endform -%}
   {%- else -%}
-    <button type="button" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" disabled aria-disabled="true">
+    <button type="button" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" disabled aria-disabled="true" aria-label="{{ 'products.product.sold_out' | t }} — {{ card_product.title | escape }}">
       {{ 'products.product.sold_out' | t }}
     </button>
   {%- endif -%}

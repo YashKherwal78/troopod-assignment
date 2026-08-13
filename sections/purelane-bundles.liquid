@@ -60,7 +60,7 @@
               </ul>
             {%- endif -%}
 
-            <a class="pl-btn {% if settings.highlight %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="{{ settings.cta_link | default: '#shop' }}">
+            <a class="pl-btn {% if settings.highlight %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="{{ settings.cta_link | default: '#shop' }}" aria-label="{{ settings.cta_label | default: 'Build this box' }} — {% if settings.tag != blank %}{{ settings.tag }}{% else %}{{ qty }} products{% endif %}">
               {{ settings.cta_label | default: 'Build this box' }}
               {%- if settings.highlight -%}{{ 'icon-arrow-right.svg' | inline_asset_content }}{%- endif -%}
             </a>

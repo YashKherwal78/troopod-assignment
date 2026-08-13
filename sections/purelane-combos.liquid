@@ -68,7 +68,7 @@
                 {%- if savings > 0 -%}<em>Save {{ savings | money }}</em>{%- endif -%}
               </div>
               <div class="pl-combo__fine">Inclusive of all taxes</div>
-              <a class="pl-btn {% if combo.tag.value == 'Best value' %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="{{ combo.cta_link.value | default: '#bundles' }}">
+              <a class="pl-btn {% if combo.tag.value == 'Best value' %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="{{ combo.cta_link.value | default: '#bundles' }}" aria-label="{{ combo.cta_label.value | default: 'Shop bundle' }} — {{ combo.title.value | escape }}">
                 {{ combo.cta_label.value | default: 'Shop bundle' }}
                 {{ 'icon-arrow-right.svg' | inline_asset_content }}
               </a>
