@@ -1,0 +1,33 @@
+.purelane.pl-bundles { background: linear-gradient(178deg, #bde6c8 0%, #a2d9b6 60%, #8ecdaa 100%); }
+
+.purelane .pl-tiers { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .purelane .pl-tiers { grid-template-columns: repeat(3, 1fr); } }
+
+.purelane .pl-tier { padding: 24px 22px; transition: .4s var(--pl-ease); }
+@media (hover: hover) { .purelane .pl-tier:hover { transform: translateY(-5px); } }
+.purelane .pl-tier--best {
+  border-color: rgba(201, 118, 29, .46);
+  box-shadow: 0 22px 54px rgba(58, 44, 112, .14), 0 0 0 1px rgba(201, 118, 29, .24), var(--pl-g-inset);
+}
+.purelane .pl-tier__tag {
+  display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px; margin-bottom: 14px;
+  background: rgba(201, 118, 29, .14); border: 1px solid rgba(201, 118, 29, .34); color: #4f7d10;
+}
+.purelane .pl-tierpix {
+  display: flex; align-items: flex-end; justify-content: center; gap: 2px; height: 70px; margin: -4px 0 16px;
+  padding: 8px 6px; border-radius: 14px; background: linear-gradient(162deg, rgba(255, 255, 255, .54), rgba(236, 230, 247, .34));
+  border: 1px solid rgba(75, 58, 143, .11);
+}
+.purelane .pl-tierpix img { height: 54px; object-fit: contain; filter: drop-shadow(0 5px 8px rgba(0, 74, 66, .13)); }
+.purelane .pl-tierpix[data-qty="5"] img,
+.purelane .pl-tierpix[data-qty="6"] img { height: 46px; }
+@media (min-width: 760px) { .purelane .pl-tierpix { height: 78px; } .purelane .pl-tierpix img { height: 62px; } .purelane .pl-tierpix[data-qty="5"] img, .purelane .pl-tierpix[data-qty="6"] img { height: 54px; } }
+.purelane .pl-tier__qty { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 44px; line-height: .9; color: var(--pl-surface); letter-spacing: -.03em; }
+@media (min-width: 760px) { .purelane .pl-tier__qty { font-size: 52px; } }
+.purelane .pl-tier__qty small { font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--pl-paper-3); display: block; margin-top: 6px; }
+.purelane .pl-tier__price { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 27px; color: var(--pl-accent); margin: 16px 0 4px; }
+.purelane .pl-tier__price s { font-size: 14px; color: var(--pl-paper-3); font-weight: 500; margin-left: 8px; }
+.purelane .pl-tier__ul { list-style: none; margin: 16px 0 20px; display: grid; gap: 8px; padding: 0; }
+.purelane .pl-tier__ul li { display: flex; gap: 9px; font-size: 13px; color: var(--pl-paper-2); }
+.purelane .pl-tier__ul li svg { width: 14px; height: 14px; color: #4f7d10; flex: 0 0 auto; margin-top: 4px; }

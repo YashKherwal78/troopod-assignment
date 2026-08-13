@@ -1,0 +1,116 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-bundles.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign tier_blocks = section.blocks | where: 'type', 'tier'
+-%}
+
+<section class="purelane pl-sec pl-bundles" id="Bundles-{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-sec-pad pl-rv" style="margin-bottom:16px">
+      <div class="pl-panel-head" style="margin-bottom:0">
+        {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+        <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.heading }}</h2>
+        {%- if section.settings.lede != blank -%}<p class="pl-lede" style="margin:0 auto">{{ section.settings.lede }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    {%- if tier_blocks.size > 0 -%}
+      <div class="pl-tiers">
+        {%- for block in tier_blocks -%}
+          {%- liquid
+            assign settings = block.settings
+            assign sample_products = settings.sample_products
+            assign qty = settings.qty
+            assign price = settings.price | default: 0 | times: 100
+            assign compare_total = 0
+            for p in sample_products
+              assign compare_total = compare_total | plus: p.price
+            endfor
+            assign per_product = price | divided_by: qty
+            assign features = settings.features | split: newline
+          -%}
+          <article class="pl-glass pl-tier{% if settings.highlight %} pl-tier--best{% endif %} pl-rv{% cycle '', ' pl-rv-d2', ' pl-rv-d3' %}" {{ block.shopify_attributes }}>
+            {%- if settings.tag != blank -%}<span class="pl-tier__tag">{{ settings.tag }}</span>{%- endif -%}
+
+            {%- if sample_products.size > 0 -%}
+              <div class="pl-tierpix" data-qty="{{ qty }}" aria-hidden="true">
+                {%- for product in sample_products -%}
+                  {%- if product.featured_image != blank -%}
+                    <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="lazy">
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            <div class="pl-tier__qty">{{ qty }}<small>Products</small></div>
+            <div class="pl-tier__price">
+              {{ price | money }}
+              {%- if compare_total > price -%}<s>{{ compare_total | money }}</s>{%- endif -%}
+            </div>
+            {%- if qty > 0 -%}<p class="pl-body-s" style="font-size:12px">Flat {{ per_product | money }} per product</p>{%- endif -%}
+
+            {%- if features.size > 0 -%}
+              <ul class="pl-tier__ul">
+                {%- for feature in features -%}
+                  <li>{{ 'icon-tick.svg' | inline_asset_content }}{{ feature | escape }}</li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            <a class="pl-btn {% if settings.highlight %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="{{ settings.cta_link | default: '#shop' }}">
+              {{ settings.cta_label | default: 'Build this box' }}
+              {%- if settings.highlight -%}{{ 'icon-arrow-right.svg' | inline_asset_content }}{%- endif -%}
+            </a>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bundles",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Build your bundle" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "One box. Every room." },
+    { "type": "text", "id": "lede", "label": "Supporting text", "default": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way." }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Pricing tier",
+      "settings": [
+        { "type": "text", "id": "tag", "label": "Flag", "default": "Starter" },
+        { "type": "range", "id": "qty", "label": "Number of products in this tier", "min": 2, "max": 6, "step": 1, "default": 2 },
+        { "type": "number", "id": "price", "label": "Flat bundle price" },
+        {
+          "type": "product_list",
+          "id": "sample_products",
+          "label": "Sample products",
+          "info": "Pick as many products as \"Number of products in this tier\" above — used for the thumbnail row and to compute the compare-at total from their real prices.",
+          "limit": 6
+        },
+        { "type": "textarea", "id": "features", "label": "Feature list", "info": "One per line.", "default": "Pick any two products\nFree shipping across India" },
+        { "type": "checkbox", "id": "highlight", "label": "Highlight as most popular", "default": false },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Build this box" },
+        { "type": "url", "id": "cta_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundles",
+      "blocks": [
+        { "type": "tier", "settings": { "tag": "Starter", "qty": 2 } },
+        { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "highlight": true } },
+        { "type": "tier", "settings": { "tag": "Whole home", "qty": 5 } }
+      ]
+    }
+  ]
+}
+{% endschema %}
