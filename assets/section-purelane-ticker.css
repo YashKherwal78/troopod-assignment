@@ -1,0 +1,12 @@
+.purelane.pl-ticker {
+  position: relative; z-index: 40; overflow: hidden; white-space: nowrap;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(255, 255, 255, .74); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(75, 58, 143, .12); color: var(--pl-paper-2);
+}
+.purelane .pl-ticker__track { display: inline-flex; gap: 40px; padding: 9px 20px; animation: pl-tick 30s linear infinite; }
+.purelane .pl-ticker__track b { color: #4f7d10; font-weight: 700; }
+@keyframes pl-tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .purelane .pl-ticker__track { animation: none; overflow-x: auto; }
+}

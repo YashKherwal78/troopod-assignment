@@ -1,0 +1,31 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-sticky-cta.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.headline != blank -%}
+  <div class="purelane pl-stickycta">
+    <span class="pl-stickycta__lbl">
+      <b>{{ section.settings.headline }}</b>
+      {%- if section.settings.subline != blank -%}<span>{{ section.settings.subline }}</span>{%- endif -%}
+    </span>
+    <a class="pl-btn pl-btn-primary pl-btn-sm" href="{{ section.settings.cta_link | default: '#' }}">
+      {{ section.settings.cta_label | default: 'Shop now' }}
+    </a>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky mobile CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Pick any 3, pay ₹499" },
+    { "type": "text", "id": "subline", "label": "Subline", "default": "Free shipping, always" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Build bundle" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [
+    { "name": "Sticky mobile CTA" }
+  ]
+}
+{% endschema %}

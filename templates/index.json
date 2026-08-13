@@ -79,6 +79,15 @@
         "heading": "Loved by 30,000 homes",
         "products_to_show": 8
       }
+    },
+    "purelane_sticky_cta": {
+      "type": "purelane-sticky-cta",
+      "settings": {
+        "headline": "Pick any 3, pay ₹499",
+        "subline": "Free shipping, always",
+        "cta_label": "Build bundle",
+        "cta_link": "#Bundles-purelane_bundles"
+      }
     }
   },
   "order": [
@@ -87,6 +96,7 @@
     "purelane_reviews",
     "purelane_combos",
     "purelane_bundles",
-    "purelane_shop"
+    "purelane_shop",
+    "purelane_sticky_cta"
   ]
 }

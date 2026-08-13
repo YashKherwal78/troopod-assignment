@@ -2,31 +2,16 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      },
+    "purelane_ticker": {
+      "type": "purelane-ticker",
       "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
-          }
-        }
+        "msg-1": { "type": "message", "settings": { "text": "Free shipping", "emphasis": "on every bundle across India" } },
+        "msg-2": { "type": "message", "settings": { "text": "100% plant-based", "emphasis": "and non-toxic" } },
+        "msg-3": { "type": "message", "settings": { "text": "Loved by", "emphasis": "30,000+ happy homes" } },
+        "msg-4": { "type": "message", "settings": { "text": "Buy 3", "emphasis": "at flat ₹499" } }
       },
-      "block_order": [
-        "announcement-bar-0"
-      ]
+      "block_order": ["msg-1", "msg-2", "msg-3", "msg-4"],
+      "settings": {}
     },
     "header": {
       "type": "header",
@@ -48,7 +33,7 @@
     }
   },
   "order": [
-    "announcement-bar",
+    "purelane_ticker",
     "header"
   ]
 }

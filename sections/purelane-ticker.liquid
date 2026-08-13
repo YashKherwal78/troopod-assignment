@@ -1,0 +1,50 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-ticker.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign ticker_blocks = section.blocks | where: 'type', 'message'
+-%}
+
+{%- if ticker_blocks.size > 0 -%}
+  <div class="purelane pl-ticker" aria-hidden="true">
+    <div class="pl-ticker__track">
+      {%- for i in (1..2) -%}
+        {%- for block in ticker_blocks -%}
+          <span {% if i == 1 %}{{ block.shopify_attributes }}{% endif %}>
+            {{ block.settings.text | escape }}
+            {%- if block.settings.emphasis != blank %} <b>{{ block.settings.emphasis | escape }}</b>{% endif -%}
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement ticker",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping" },
+        { "type": "text", "id": "emphasis", "label": "Emphasised part", "default": "on every bundle across India" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement ticker",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Free shipping", "emphasis": "on every bundle across India" } },
+        { "type": "message", "settings": { "text": "100% plant-based", "emphasis": "and non-toxic" } },
+        { "type": "message", "settings": { "text": "Loved by", "emphasis": "30,000+ happy homes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
