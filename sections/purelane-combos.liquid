@@ -2,7 +2,7 @@
 {{ 'section-purelane-combos.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
 
-<section class="purelane pl-sec pl-combos" id="Combos-{{ section.id }}">
+<section class="purelane pl-sec pl-combos" id="Combos-{{ section.id }}" data-scene-zone data-scene-label="Combos">
   <div class="pl-wrap">
     <div class="pl-panel-head pl-rv">
       {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}

@@ -6,7 +6,7 @@
   assign rating = section.settings.aggregate_rating
 -%}
 
-<section class="purelane pl-sec pl-reviews" id="Reviews-{{ section.id }}">
+<section class="purelane pl-sec pl-reviews" id="Reviews-{{ section.id }}" data-scene-zone data-scene-label="Reviews">
   <div class="pl-wrap">
     <div class="pl-reviews__head pl-rv">
       {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}

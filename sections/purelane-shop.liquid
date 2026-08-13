@@ -8,7 +8,7 @@
   assign limit = section.settings.products_to_show
 -%}
 
-<section class="purelane pl-sec pl-shop" id="Shop-{{ section.id }}">
+<section class="purelane pl-sec pl-shop" id="Shop-{{ section.id }}" data-scene-zone data-scene-label="Shop">
   <div class="pl-wrap">
     <div class="pl-panel-head pl-rv">
       {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}

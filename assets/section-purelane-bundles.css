@@ -1,4 +1,4 @@
-.purelane.pl-bundles { background: linear-gradient(178deg, #bde6c8 0%, #a2d9b6 60%, #8ecdaa 100%); }
+.purelane.pl-bundles { background: transparent; }
 
 .purelane .pl-tiers { display: grid; gap: 14px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .purelane .pl-tiers { grid-template-columns: repeat(3, 1fr); } }

@@ -1,4 +1,4 @@
-.purelane.pl-reviews { background: linear-gradient(178deg, #fbfffb 0%, #eafaec 100%); }
+.purelane.pl-reviews { background: transparent; }
 
 .purelane .pl-reviews__head {
   display: flex; align-items: center; justify-content: center; gap: 10px 18px; flex-wrap: wrap; margin-bottom: 14px;

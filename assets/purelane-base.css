@@ -7,6 +7,8 @@
    collides with Dawn's own tokens or component classes.
    ========================================================================== */
 .purelane {
+  position: relative;
+  z-index: 1;
   --pl-ink: #f4f0fb;
   --pl-brand: #4b3a8f;
   --pl-brand-lt: #6b55b8;

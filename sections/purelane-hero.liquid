@@ -9,7 +9,7 @@
   assign stage_blocks = section.blocks | where: 'type', 'stage'
 -%}
 
-<section class="purelane pl-hero" id="Hero-{{ section.id }}">
+<section class="purelane pl-hero" id="Hero-{{ section.id }}" data-scene-zone data-scene-label="Hero">
   <div class="pl-wrap pl-hero__grid">
 
     {%- if promise_blocks.size > 0 -%}

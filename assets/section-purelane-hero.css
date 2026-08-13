@@ -4,7 +4,7 @@
   display: flex;
   align-items: flex-end;
   padding: 96px 0 var(--pl-sec-y);
-  background: linear-gradient(178deg, #fbfffb 0%, #eafaec 30%, #d6f1dc 70%, #bfe8ca 100%);
+  background: transparent;
   overflow: hidden;
 }
 .purelane .pl-hero__grid {

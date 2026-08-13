@@ -1,4 +1,4 @@
-.purelane.pl-combos { background: linear-gradient(178deg, #d9f2df 0%, #bde6c8 40%, #a2d9b6 100%); }
+.purelane.pl-combos { background: transparent; }
 
 .purelane .pl-comborail {
   display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;

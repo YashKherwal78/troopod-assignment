@@ -1,0 +1,36 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-scenes.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-scenes.js' | asset_url }}" defer="defer"></script>
+
+{% comment %}
+  Global fixed background (the prototype's crossfading "scenes") + the
+  right-hand scroll progress rail. Rendered once per page via this section
+  rather than duplicated per-section, since both are position:fixed
+  overlays. purelane-scenes.js finds every element on the page with
+  [data-scene-zone] (each of the other purelane-* sections carries that
+  attribute) and distributes the scene crossfade and rail dots across
+  however many zones actually exist — so removing, reordering, or adding
+  sections in the theme editor never desyncs a hardcoded scene number.
+{% endcomment %}
+
+<div class="pl-scenes" id="PlScenes" aria-hidden="true">
+  <div class="pl-scene pl-scene--s1 pl-scene--on"></div>
+  <div class="pl-scene pl-scene--s2"></div>
+  <div class="pl-scene pl-scene--s3"></div>
+  <div class="pl-scene pl-scene--s4"></div>
+  <div class="pl-scene-vignette"></div>
+</div>
+
+<nav class="pl-rail" id="PlRail" aria-label="Section progress"></nav>
+
+{% schema %}
+{
+  "name": "Purelane background + rail",
+  "tag": "section",
+  "class": "pl-scenes-section",
+  "settings": [],
+  "presets": [
+    { "name": "Purelane background + rail" }
+  ]
+}
+{% endschema %}

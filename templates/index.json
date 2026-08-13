@@ -1,5 +1,9 @@
 {
   "sections": {
+    "purelane_scenes": {
+      "type": "purelane-scenes",
+      "settings": {}
+    },
     "purelane_hero": {
       "type": "purelane-hero",
       "blocks": {
@@ -78,6 +82,7 @@
     }
   },
   "order": [
+    "purelane_scenes",
     "purelane_hero",
     "purelane_reviews",
     "purelane_combos",

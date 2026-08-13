@@ -52,8 +52,40 @@
     }
   }
 
+  function initParallax(prod) {
+    if (prod.__plParallax || reduce) return;
+    prod.__plParallax = true;
+
+    if (typeof prod.animate === 'function') {
+      prod.animate(
+        [
+          { filter: 'drop-shadow(0 14px 22px rgba(0,74,66,.15))' },
+          { filter: 'drop-shadow(0 20px 30px rgba(0,74,66,.22))' },
+          { filter: 'drop-shadow(0 14px 22px rgba(0,74,66,.15))' },
+        ],
+        { duration: 7000, iterations: Infinity, easing: 'ease-in-out' }
+      );
+    }
+
+    if (!window.matchMedia('(min-width: 1024px)').matches || !window.matchMedia('(pointer: fine)').matches) return;
+    var raf = null, mx = 0, my = 0;
+    function apply() {
+      raf = null;
+      prod.style.transform = 'translate3d(' + (mx * -14).toFixed(2) + 'px,' + (my * -8).toFixed(2) + 'px,0)';
+    }
+    window.addEventListener('mousemove', function (e) {
+      var r = prod.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      mx = Math.max(-1, Math.min(1, (e.clientX - cx) / (window.innerWidth / 2)));
+      my = Math.max(-1, Math.min(1, (e.clientY - cy) / (window.innerHeight / 2)));
+      if (!raf) raf = requestAnimationFrame(apply);
+    }, { passive: true });
+  }
+
   function init(root) {
-    (root || document).querySelectorAll('.pl-hstage').forEach(initStage);
+    var scope = root || document;
+    scope.querySelectorAll('.pl-hstage').forEach(initStage);
+    scope.querySelectorAll('.pl-hero__prod').forEach(initParallax);
   }
 
   document.addEventListener('DOMContentLoaded', function () { init(document); });
