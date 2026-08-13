@@ -1,75 +1,87 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "purelane_hero": {
+      "type": "purelane-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "promise-1": { "type": "promise", "settings": { "icon": "leaf", "label": "Plant\npowered" } },
+        "promise-2": { "type": "promise", "settings": { "icon": "shield", "label": "Safe for\nkids & pets" } },
+        "promise-3": { "type": "promise", "settings": { "icon": "no-chem", "label": "Zero harsh\nchemicals" } },
+        "stage-1": { "type": "stage", "settings": { "label": "Single bottle" } },
+        "stage-2": { "type": "stage", "settings": { "label": "Any 2 products" } },
+        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products" } }
+      },
+      "block_order": ["promise-1", "promise-2", "promise-3", "stage-1", "stage-2", "stage-3"],
+      "settings": {
+        "heading": "Clean\nThat\nLasts",
+        "cta_primary_label": "Shop now",
+        "cta_primary_link": "#Shop-purelane_shop",
+        "cta_secondary_label": "How it works",
+        "cta_secondary_link": ""
+      }
+    },
+    "purelane_reviews": {
+      "type": "purelane-reviews",
+      "blocks": {
+        "review-1": { "type": "review" },
+        "review-2": {
+          "type": "review",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "title": "Best dishwash ever",
+            "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
+            "name": "Priya",
+            "tag": "Dishwash gel"
           }
         },
-        "button": {
-          "type": "buttons",
+        "review-3": {
+          "type": "review",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "title": "Great product, great packaging",
+            "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
+            "name": "Sunita",
+            "tag": "Liquid handwash"
+          }
+        },
+        "review-4": {
+          "type": "review",
+          "settings": {
+            "title": "Dog friendly",
+            "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
+            "name": "Rohit S.",
+            "tag": "Floor cleaner"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
+      "block_order": ["review-1", "review-2", "review-3", "review-4"],
+      "settings": {}
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "purelane_combos": {
+      "type": "purelane-combos",
+      "settings": {}
+    },
+    "purelane_bundles": {
+      "type": "purelane-bundles",
+      "blocks": {
+        "tier-1": { "type": "tier", "settings": { "tag": "Starter", "qty": 2, "features": "Pick any two products\nFree shipping across India" } },
+        "tier-2": { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "highlight": true, "features": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India" } },
+        "tier-3": { "type": "tier", "settings": { "tag": "Whole home", "qty": 5, "features": "Pick any five products\nEvery room in one order\nFree shipping across India" } }
+      },
+      "block_order": ["tier-1", "tier-2", "tier-3"],
+      "settings": {}
+    },
+    "purelane_shop": {
+      "type": "purelane-shop",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "kicker": "Bestsellers",
+        "heading": "Loved by 30,000 homes",
+        "products_to_show": 8
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "purelane_hero",
+    "purelane_reviews",
+    "purelane_combos",
+    "purelane_bundles",
+    "purelane_shop"
   ]
 }
