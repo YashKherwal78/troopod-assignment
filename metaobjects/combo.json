@@ -1,0 +1,18 @@
+{
+  "_comment": "Metaobject definition for the 'Best-selling combos' section (#combos). The prototype hardcoded combo copy/prices directly in HTML; there is no native Shopify object for a curated multi-product bundle with a manual sale price, so this is modelled as a metaobject. Compare-at total and savings are NOT stored here — they're computed in Liquid from the referenced products' live prices, so they can never drift out of sync with the catalogue. Create via Shopify Admin > Content > Metaobjects (or the Admin GraphQL metaobjectDefinitionCreate mutation with this shape).",
+  "type": "combo",
+  "name": "Combo",
+  "fieldDefinitions": [
+    { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
+    { "key": "tag", "name": "Flag (e.g. \"Most popular\")", "type": "single_line_text_field", "required": false },
+    { "key": "save_label_override", "name": "Save badge override", "type": "single_line_text_field", "required": false, "description": "Leave blank to auto-compute \"You save ₹X\" from product prices. Use for special copy like \"Biggest saving\"." },
+    { "key": "products", "name": "Products included", "type": "list.product_reference", "required": true, "validations": { "min": 2, "max": 5 } },
+    { "key": "benefit_lines", "name": "Per-product benefit captions", "type": "list.single_line_text_field", "required": false, "description": "Optional. If provided, must have the same number of lines as Products included, in the same order." },
+    { "key": "description", "name": "Description", "type": "multi_line_text_field", "required": true },
+    { "key": "price", "name": "Bundle price", "type": "number_decimal", "required": true },
+    { "key": "cta_label", "name": "CTA label", "type": "single_line_text_field", "required": false },
+    { "key": "cta_link", "name": "CTA link", "type": "url", "required": false }
+  ],
+  "access": { "storefront": "PUBLIC_READ" },
+  "capabilities": { "publishable": { "enabled": true } }
+}
