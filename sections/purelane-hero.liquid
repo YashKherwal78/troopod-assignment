@@ -4,7 +4,7 @@
 <script src="{{ 'purelane-hero.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
-  assign heading_lines = section.settings.heading | split: newline
+  assign heading_lines = section.settings.heading | newline_to_br | split: '<br />'
   assign promise_blocks = section.blocks | where: 'type', 'promise'
   assign stage_blocks = section.blocks | where: 'type', 'stage'
 -%}
@@ -23,7 +23,7 @@
                 {%- else -%}{{ 'icon-leaf.svg' | inline_asset_content }}
               {%- endcase -%}
             </span>
-            <span>{{ block.settings.label | escape | replace: newline, '<br>' }}</span>
+            <span>{{ block.settings.label | escape | newline_to_br }}</span>
           </div>
         {%- endfor -%}
       </div>
@@ -64,7 +64,7 @@
                 {%- when 'no-chem' -%}{{ 'icon-no-chemicals.svg' | inline_asset_content }}
                 {%- else -%}{{ 'icon-leaf.svg' | inline_asset_content }}
               {%- endcase -%}
-              {{ block.settings.label | escape | replace: newline, ' ' }}
+              {{ block.settings.label | escape | newline_to_br | split: '<br />' | join: ' ' }}
             </div>
           {%- endfor -%}
         </div>

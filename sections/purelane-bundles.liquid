@@ -29,7 +29,8 @@
               assign compare_total = compare_total | plus: p.price
             endfor
             assign per_product = price | divided_by: qty
-            assign features = settings.features | split: newline
+            assign features_html = settings.features | newline_to_br
+            assign features = features_html | split: '<br />'
           -%}
           <article class="pl-glass pl-tier{% if settings.highlight %} pl-tier--best{% endif %} pl-rv{% cycle '', ' pl-rv-d2', ' pl-rv-d3' %}" {{ block.shopify_attributes }}>
             {%- if settings.tag != blank -%}<span class="pl-tier__tag">{{ settings.tag }}</span>{%- endif -%}
