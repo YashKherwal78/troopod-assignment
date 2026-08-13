@@ -1,0 +1,11 @@
+.purelane .pl-wb { display: grid; gap: 20px 16px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 880px) { .purelane .pl-wb { grid-template-columns: repeat(4, 1fr); } }
+.purelane .pl-wb__i { text-align: center; }
+.purelane .pl-wb__ci {
+  width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 36% 28%, rgba(201, 118, 29, .18), rgba(75, 58, 143, .14));
+  border: 1px solid rgba(75, 58, 143, .16); color: #4f7d10;
+}
+.purelane .pl-wb__ci svg { width: 25px; height: 25px; }
+.purelane .pl-wb__i h4 { font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--pl-surface); margin-bottom: 7px; }
+.purelane .pl-wb__i p { font-size: 12.2px; color: var(--pl-paper-2); line-height: 1.5; }

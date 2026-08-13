@@ -1,0 +1,66 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-trust.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign trust_blocks = section.blocks | where: 'type', 'item'
+-%}
+
+<section class="purelane pl-sec pl-trustsec" id="Trust-{{ section.id }}" data-scene-zone data-scene-label="Trust">
+  <div class="pl-wrap">
+    {%- if trust_blocks.size > 0 -%}
+      <div class="pl-glass pl-trust pl-rv">
+        {%- for block in trust_blocks -%}
+          <div class="pl-trust__i" {{ block.shopify_attributes }}>
+            {%- case block.settings.icon -%}
+              {%- when 'shield' -%}{{ 'icon-shield-check.svg' | inline_asset_content }}
+              {%- when 'box' -%}{{ 'icon-recycle-box.svg' | inline_asset_content }}
+              {%- when 'globe' -%}{{ 'icon-globe.svg' | inline_asset_content }}
+              {%- else -%}{{ 'icon-leaf-outline.svg' | inline_asset_content }}
+            {%- endcase -%}
+            <span>{{ block.settings.text | escape | newline_to_br }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "box", "label": "Box" },
+            { "value": "globe", "label": "Globe" }
+          ],
+          "default": "leaf"
+        },
+        { "type": "text", "id": "text", "label": "Text", "info": "Use a line break for two lines.", "default": "Plant derived\nformulas" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "leaf", "text": "Plant derived\nformulas" } },
+        { "type": "item", "settings": { "icon": "box", "text": "Recyclable\npackaging" } },
+        { "type": "item", "settings": { "icon": "shield", "text": "Safe for\nkids & pets" } },
+        { "type": "item", "settings": { "icon": "globe", "text": "Made in\nIndia" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -116,6 +116,28 @@
         "products_to_show": 8
       }
     },
+    "purelane_whybundles": {
+      "type": "purelane-whybundles",
+      "blocks": {
+        "reason-1": { "type": "reason", "settings": { "icon": "discount", "title": "Save up to 45%", "description": "Versus buying the same products separately" } },
+        "reason-2": { "type": "reason", "settings": { "icon": "price", "title": "One flat price", "description": "No calculators, no comparing carts" } },
+        "reason-3": { "type": "reason", "settings": { "icon": "star", "title": "Curated by experts", "description": "Products picked to work well together" } },
+        "reason-4": { "type": "reason", "settings": { "icon": "truck", "title": "Free shipping always", "description": "Included on every bundle, all India" } }
+      },
+      "block_order": ["reason-1", "reason-2", "reason-3", "reason-4"],
+      "settings": {}
+    },
+    "purelane_trust": {
+      "type": "purelane-trust",
+      "blocks": {
+        "trust-1": { "type": "item", "settings": { "icon": "leaf", "text": "Plant derived\nformulas" } },
+        "trust-2": { "type": "item", "settings": { "icon": "box", "text": "Recyclable\npackaging" } },
+        "trust-3": { "type": "item", "settings": { "icon": "shield", "text": "Safe for\nkids & pets" } },
+        "trust-4": { "type": "item", "settings": { "icon": "globe", "text": "Made in\nIndia" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {}
+    },
     "purelane_sticky_cta": {
       "type": "purelane-sticky-cta",
       "settings": {
@@ -136,6 +158,8 @@
     "purelane_combos",
     "purelane_bundles",
     "purelane_shop",
+    "purelane_whybundles",
+    "purelane_trust",
     "purelane_sticky_cta"
   ]
 }

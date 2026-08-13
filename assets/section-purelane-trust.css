@@ -1,0 +1,5 @@
+.purelane .pl-trust { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 6px; }
+@media (min-width: 820px) { .purelane .pl-trust { grid-template-columns: repeat(4, 1fr); } }
+.purelane .pl-trust__i { display: flex; align-items: center; gap: 12px; padding: 16px 14px; }
+.purelane .pl-trust__i svg { width: 26px; height: 26px; color: #4f7d10; flex: 0 0 auto; }
+.purelane .pl-trust__i span { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--pl-paper-2); line-height: 1.32; }
