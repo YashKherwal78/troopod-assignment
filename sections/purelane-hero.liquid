@@ -20,7 +20,7 @@
               {%- case block.settings.icon -%}
                 {%- when 'shield' -%}{{ 'icon-shield-check.svg' | inline_asset_content }}
                 {%- when 'no-chem' -%}{{ 'icon-no-chemicals.svg' | inline_asset_content }}
-                {%- else -%}{{ 'icon-leaf.svg' | inline_asset_content }}
+                {%- else -%}{{ 'icon-leaf-outline.svg' | inline_asset_content }}
               {%- endcase -%}
             </span>
             <span>{{ block.settings.label | escape | newline_to_br }}</span>
@@ -37,7 +37,7 @@
       </h1>
       <div class="pl-rule pl-rv pl-rv-d1">
         <i></i>
-        {{ 'icon-leaf.svg' | inline_asset_content }}
+        {{ 'icon-leaf-outline.svg' | inline_asset_content }}
         <i></i>
       </div>
       <div class="pl-lede pl-rv pl-rv-d2">{{ section.settings.lede }}</div>
@@ -62,7 +62,7 @@
               {%- case block.settings.icon -%}
                 {%- when 'shield' -%}{{ 'icon-shield-check.svg' | inline_asset_content }}
                 {%- when 'no-chem' -%}{{ 'icon-no-chemicals.svg' | inline_asset_content }}
-                {%- else -%}{{ 'icon-leaf.svg' | inline_asset_content }}
+                {%- else -%}{{ 'icon-leaf-outline.svg' | inline_asset_content }}
               {%- endcase -%}
               {{ block.settings.label | escape | newline_to_br | split: '<br />' | join: ' ' }}
             </div>
