@@ -1,0 +1,10 @@
+.purelane.pl-shop { background: linear-gradient(178deg, #f0fbf2 0%, #d9f2df 40%, #bde6c8 100%); }
+.purelane .pl-shelf {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 860px) {
+  .purelane .pl-shelf { grid-template-columns: repeat(4, 1fr); }
+}
+.purelane .pl-shelf > .pl-rv { display: flex; }
