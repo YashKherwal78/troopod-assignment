@@ -1,0 +1,72 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-pillars.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign pillar_blocks = section.blocks | where: 'type', 'pillar'
+-%}
+
+<section class="purelane pl-sec pl-pillars" id="Pillars-{{ section.id }}" data-scene-zone data-scene-label="How it works">
+  <div class="pl-wrap">
+    {%- if pillar_blocks.size > 0 -%}
+      <div class="pl-pillars__grid">
+        {%- for block in pillar_blocks -%}
+          <article class="pl-glass pl-pillar pl-rv{% cycle '', ' pl-rv-d2', ' pl-rv-d3' %}" {{ block.shopify_attributes }}>
+            <span class="pl-pillar__ic">
+              {%- case block.settings.icon -%}
+                {%- when 'shield' -%}{{ 'icon-shield-check.svg' | inline_asset_content }}
+                {%- when 'heart' -%}{{ 'icon-heart.svg' | inline_asset_content }}
+                {%- else -%}{{ 'icon-leaf-outline.svg' | inline_asset_content }}
+              {%- endcase -%}
+            </span>
+            <h3 class="pl-d3">{{ block.settings.title | escape }}</h3>
+            <p class="pl-body-s">{{ block.settings.description | escape }}</p>
+            {%- if block.settings.link_label != blank -%}
+              <a class="pl-btn pl-btn-ghost pl-btn-sm" href="{{ block.settings.link_url | default: '#' }}">{{ block.settings.link_label }}</a>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pillars",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield check" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "leaf"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Less scrubbing" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn more" },
+        { "type": "url", "id": "link_url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pillars",
+      "blocks": [
+        { "type": "pillar", "settings": { "icon": "leaf", "title": "Less scrubbing", "description": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub." } },
+        { "type": "pillar", "settings": { "icon": "shield", "title": "Clean ingredients", "description": "No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food." } },
+        { "type": "pillar", "settings": { "icon": "heart", "title": "Safe around everyone", "description": "Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

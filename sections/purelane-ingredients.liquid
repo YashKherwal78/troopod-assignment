@@ -1,0 +1,81 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-ingredients.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign ingredient_blocks = section.blocks | where: 'type', 'ingredient'
+-%}
+
+<section class="purelane pl-sec pl-ingredients" id="Ingredients-{{ section.id }}" data-scene-zone data-scene-label="Ingredients">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-sec-pad pl-rv">
+      <div class="pl-panel-head">
+        <h2 class="pl-d2">{{ section.settings.heading }}</h2>
+        <div class="pl-rule"><i></i>{{ 'icon-leaf-outline.svg' | inline_asset_content }}<i></i></div>
+      </div>
+      {%- if ingredient_blocks.size > 0 -%}
+        <div class="pl-ing">
+          {%- for block in ingredient_blocks -%}
+            <div class="pl-ing__i" {{ block.shopify_attributes }}>
+              <div class="pl-ing__art">
+                {%- case block.settings.icon -%}
+                  {%- when 'orange' -%}{{ 'icon-bot-orange.svg' | inline_asset_content }}
+                  {%- when 'soapnut' -%}{{ 'icon-bot-soapnut.svg' | inline_asset_content }}
+                  {%- when 'neem' -%}{{ 'icon-bot-neem.svg' | inline_asset_content }}
+                  {%- when 'lemongrass' -%}{{ 'icon-bot-lemongrass.svg' | inline_asset_content }}
+                  {%- else -%}{{ 'icon-bot-coconut.svg' | inline_asset_content }}
+                {%- endcase -%}
+              </div>
+              <h4>{{ block.settings.title | escape }}</h4>
+              <p>{{ block.settings.description | escape }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Sourced from nature" }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "coconut", "label": "Coconut" },
+            { "value": "orange", "label": "Orange peel" },
+            { "value": "soapnut", "label": "Soap nut" },
+            { "value": "neem", "label": "Neem" },
+            { "value": "lemongrass", "label": "Lemongrass" }
+          ],
+          "default": "coconut"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Coconut" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Plant-derived cleansers that lift grease" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients",
+      "blocks": [
+        { "type": "ingredient", "settings": { "icon": "coconut", "title": "Coconut", "description": "Plant-derived cleansers that lift grease" } },
+        { "type": "ingredient", "settings": { "icon": "orange", "title": "Orange peel", "description": "Natural degreaser and fresh citrus lift" } },
+        { "type": "ingredient", "settings": { "icon": "soapnut", "title": "Soap nut", "description": "A traditional plant foaming agent" } },
+        { "type": "ingredient", "settings": { "icon": "neem", "title": "Neem", "description": "Time-tested antibacterial from the tree" } },
+        { "type": "ingredient", "settings": { "icon": "lemongrass", "title": "Lemongrass", "description": "Clean fragrance with nothing synthetic" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+.purelane .pl-proof__grid { display: grid; gap: 22px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .purelane .pl-proof__grid { grid-template-columns: 1.05fr .62fr; gap: 30px; align-items: center; } }
+.purelane .pl-proof__l .pl-btn { margin-top: 22px; }
+
+.purelane .pl-rot { position: relative; padding: 18px 12px 16px; border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.purelane .pl-rot__frame { position: relative; width: 100%; height: 172px; }
+@media (min-width: 900px) { .purelane .pl-rot__frame { height: 206px; } }
+.purelane .pl-rot__img {
+  position: absolute; left: 50%; top: 50%; height: 164px; opacity: 0; object-fit: contain;
+  transform: translate(-50%, -42%) scale(.94);
+  transition: opacity .75s cubic-bezier(.2, .7, .2, 1), transform .75s cubic-bezier(.2, .7, .2, 1);
+  filter: drop-shadow(0 11px 17px rgba(0, 74, 66, .14));
+}
+@media (min-width: 900px) { .purelane .pl-rot__img { height: 196px; } }
+.purelane .pl-rot__img.pl-rot__img--on { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.purelane .pl-rot__cap { margin-top: 12px; text-align: center; min-height: 32px; }
+.purelane .pl-rot__cap b { display: block; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--pl-surface); }
+.purelane .pl-rot__cap span { display: block; font-size: 11px; color: var(--pl-paper-3); margin-top: 3px; }
+.purelane .pl-rot__dots { display: flex; gap: 6px; justify-content: center; margin-top: 12px; }
+.purelane .pl-rot__dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(75, 58, 143, .22); transition: .4s cubic-bezier(.2, .7, .2, 1); display: block; }
+.purelane .pl-rot__dots i.pl-rot__on { background: var(--pl-accent); width: 17px; border-radius: 999px; }
+
+.purelane .pl-stats {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 22px 18px; margin-top: 20px;
+}
+@media (min-width: 640px) { .purelane .pl-stats { grid-template-columns: repeat(4, 1fr); } }
+.purelane .pl-stat { text-align: center; }
+.purelane .pl-stat__ring {
+  width: 74px; height: 74px; margin: 0 auto 11px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px solid rgba(75, 58, 143, .24);
+  background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .86), rgba(236, 230, 247, .52));
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 19px; color: var(--pl-surface); letter-spacing: -.02em;
+}
+.purelane .pl-stat h5 { font-size: 10.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--pl-accent); margin-bottom: 5px; }
+.purelane .pl-stat p { font-size: 11.4px; color: var(--pl-paper-2); line-height: 1.44; }

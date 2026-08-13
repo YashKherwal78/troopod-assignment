@@ -58,6 +58,42 @@
       "block_order": ["review-1", "review-2", "review-3", "review-4"],
       "settings": {}
     },
+    "purelane_ingredients": {
+      "type": "purelane-ingredients",
+      "blocks": {
+        "ing-1": { "type": "ingredient", "settings": { "icon": "coconut", "title": "Coconut", "description": "Plant-derived cleansers that lift grease" } },
+        "ing-2": { "type": "ingredient", "settings": { "icon": "orange", "title": "Orange peel", "description": "Natural degreaser and fresh citrus lift" } },
+        "ing-3": { "type": "ingredient", "settings": { "icon": "soapnut", "title": "Soap nut", "description": "A traditional plant foaming agent" } },
+        "ing-4": { "type": "ingredient", "settings": { "icon": "neem", "title": "Neem", "description": "Time-tested antibacterial from the tree" } },
+        "ing-5": { "type": "ingredient", "settings": { "icon": "lemongrass", "title": "Lemongrass", "description": "Clean fragrance with nothing synthetic" } }
+      },
+      "block_order": ["ing-1", "ing-2", "ing-3", "ing-4", "ing-5"],
+      "settings": { "heading": "Sourced from nature" }
+    },
+    "purelane_pillars": {
+      "type": "purelane-pillars",
+      "blocks": {
+        "pillar-1": { "type": "pillar", "settings": { "icon": "leaf", "title": "Less scrubbing", "description": "A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub.", "link_label": "Learn more", "link_url": "#Shop-purelane_shop" } },
+        "pillar-2": { "type": "pillar", "settings": { "icon": "shield", "title": "Clean ingredients", "description": "No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food.", "link_label": "Learn more", "link_url": "#Ingredients-purelane_ingredients" } },
+        "pillar-3": { "type": "pillar", "settings": { "icon": "heart", "title": "Safe around everyone", "description": "Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day.", "link_label": "Learn more", "link_url": "#Proof-purelane_proof" } }
+      },
+      "block_order": ["pillar-1", "pillar-2", "pillar-3"],
+      "settings": {}
+    },
+    "purelane_proof": {
+      "type": "purelane-proof",
+      "blocks": {
+        "stat-1": { "type": "stat", "settings": { "value": "99.9%", "label": "Germ kill", "description": "Tested against germs and bacteria" } },
+        "stat-2": { "type": "stat", "settings": { "value": "0%", "label": "Sulphates", "description": "No SLS, chlorine or parabens" } },
+        "stat-3": { "type": "stat", "settings": { "value": "100%", "label": "Plant based", "description": "Cleansers derived from plants" } },
+        "stat-4": { "type": "stat", "settings": { "value": "4.8", "label": "Rated", "description": "Across 8,000+ verified reviews" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4"],
+      "settings": {
+        "heading": "Tough on grime.\nGentle on everything else.",
+        "cta_link": "#Ingredients-purelane_ingredients"
+      }
+    },
     "purelane_combos": {
       "type": "purelane-combos",
       "settings": {}
@@ -94,6 +130,9 @@
     "purelane_scenes",
     "purelane_hero",
     "purelane_reviews",
+    "purelane_ingredients",
+    "purelane_pillars",
+    "purelane_proof",
     "purelane_combos",
     "purelane_bundles",
     "purelane_shop",

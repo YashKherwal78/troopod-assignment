@@ -1,0 +1,122 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-proof.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'purelane-reveal.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'purelane-proof.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign heading_lines = section.settings.heading | newline_to_br | split: '<br />'
+  assign rotator_blocks = section.blocks | where: 'type', 'rotator_item'
+  assign stat_blocks = section.blocks | where: 'type', 'stat'
+-%}
+
+<section class="purelane pl-sec pl-proof" id="Proof-{{ section.id }}" data-scene-zone data-scene-label="Why it works">
+  <div class="pl-wrap">
+    <div class="pl-glass pl-sec-pad pl-rv">
+      <div class="pl-proof__grid">
+        <div class="pl-proof__l">
+          {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+          <h2 class="pl-d2" style="margin-top:12px">
+            {%- for line in heading_lines -%}{{ line | escape }}{% unless forloop.last %}<br>{% endunless %}{%- endfor -%}
+          </h2>
+          <p class="pl-body-s" style="max-width:40ch">{{ section.settings.body }}</p>
+          {%- if section.settings.cta_label != blank -%}
+            <a class="pl-btn pl-btn-primary" href="{{ section.settings.cta_link | default: '#' }}" style="margin-top:22px">
+              {{ section.settings.cta_label }}
+              {{ 'icon-arrow-right.svg' | inline_asset_content }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if rotator_blocks.size > 0 -%}
+          <div class="pl-glass-2 pl-rot" id="Rot-{{ section.id }}" aria-hidden="true">
+            <div class="pl-rot__frame">
+              {%- for block in rotator_blocks -%}
+                {%- if block.settings.product.featured_image != blank -%}
+                  <img
+                    class="pl-rot__img{% if forloop.first %} pl-rot__img--on{% endif %}"
+                    src="{{ block.settings.product.featured_image | image_url: width: 300 }}"
+                    alt=""
+                    width="{{ block.settings.product.featured_image.width }}"
+                    height="{{ block.settings.product.featured_image.height }}"
+                    loading="lazy"
+                    data-name="{{ block.settings.name | default: block.settings.product.title | escape }}"
+                    data-note="{{ block.settings.note | escape }}"
+                  >
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <div class="pl-rot__cap">
+              <b>{{ rotator_blocks.first.settings.name | default: rotator_blocks.first.settings.product.title }}</b>
+              <span>{{ rotator_blocks.first.settings.note }}</span>
+            </div>
+            {%- if rotator_blocks.size > 1 -%}
+              <div class="pl-rot__dots">
+                {%- for block in rotator_blocks -%}
+                  <i{% if forloop.first %} class="pl-rot__on"{% endif %}></i>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if stat_blocks.size > 0 -%}
+        <div class="pl-glass-2 pl-stats">
+          {%- for block in stat_blocks -%}
+            <div class="pl-stat" {{ block.shopify_attributes }}>
+              <div class="pl-stat__ring">{{ block.settings.value }}</div>
+              <h5>{{ block.settings.label | escape }}</h5>
+              <p>{{ block.settings.description | escape }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Proof",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Why it works" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Tough on grime.\nGentle on everything else." },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "Every formula is built on plant-derived cleansers and essential oils. It behaves exactly like the cleaner you are used to, minus the things you never signed up for." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "See the ingredient list" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "rotator_item",
+      "name": "Rotator product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "name", "label": "Name override" },
+        { "type": "text", "id": "note", "label": "Caption" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "99.9%" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Germ kill" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Tested against germs and bacteria" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proof",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "99.9%", "label": "Germ kill", "description": "Tested against germs and bacteria" } },
+        { "type": "stat", "settings": { "value": "0%", "label": "Sulphates", "description": "No SLS, chlorine or parabens" } },
+        { "type": "stat", "settings": { "value": "100%", "label": "Plant based", "description": "Cleansers derived from plants" } },
+        { "type": "stat", "settings": { "value": "4.8", "label": "Rated", "description": "Across 8,000+ verified reviews" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
