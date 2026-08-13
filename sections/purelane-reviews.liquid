@@ -1,0 +1,86 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-reviews.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign review_blocks = section.blocks | where: 'type', 'review'
+  assign rating = section.settings.aggregate_rating
+-%}
+
+<section class="purelane pl-sec pl-reviews" id="Reviews-{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="pl-reviews__head pl-rv">
+      {%- if section.settings.kicker != blank -%}<span class="pl-kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+      {%- if rating != blank -%}
+        <span class="pl-reviews__agg">
+          <span class="pl-reviews__stars" aria-hidden="true">{% for i in (1..5) %}&#9733;{% endfor %}</span>
+          <b>{{ rating }}</b> from {{ section.settings.review_count_label }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.homes_count_label != blank -%}
+        <span class="pl-reviews__agg">Loved by <b>{{ section.settings.homes_count_label }}</b></span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if review_blocks.size > 0 -%}
+    <div class="pl-reviews__rail pl-rv" aria-label="Customer reviews">
+      <div class="pl-reviews__track">
+        {%- for i in (1..2) -%}
+          {%- for block in review_blocks -%}
+            <article class="pl-glass-2 pl-rcard" {% if i == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}>
+              {%- if block.settings.rating > 0 -%}
+                <div class="pl-rcard__st" aria-hidden="true">
+                  {%- for n in (1..5) -%}{% if n <= block.settings.rating %}&#9733;{% else %}&#9734;{% endif %}{%- endfor -%}
+                </div>
+              {%- endif -%}
+              <h5>{{ block.settings.title | escape }}</h5>
+              <p>{{ block.settings.quote | escape }}</p>
+              <div class="pl-rcard__who">
+                {{ 'icon-tick.svg' | inline_asset_content }}
+                <b>{{ block.settings.name | escape }}</b>
+                {%- if block.settings.tag != blank -%}<span>&middot; {{ block.settings.tag | escape }}</span>{%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Reviews rail",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "That's what they said" },
+    { "type": "text", "id": "aggregate_rating", "label": "Aggregate rating", "default": "4.8" },
+    { "type": "text", "id": "review_count_label", "label": "Review count label", "default": "8,000+ reviews" },
+    { "type": "text", "id": "homes_count_label", "label": "Homes count label", "default": "12 lakh+ homes" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Star rating", "min": 0, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title", "default": "Works like a charm" },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Finally an eco option that cleans as well as the chemical detergent I used for years." },
+        { "type": "text", "id": "name", "label": "Customer name", "default": "Anita" },
+        { "type": "text", "id": "tag", "label": "Product tag", "default": "Laundry detergent" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews rail",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review", "settings": { "title": "Best dishwash ever", "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.", "name": "Priya", "tag": "Dishwash gel" } },
+        { "type": "review", "settings": { "title": "Dog friendly", "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.", "name": "Rohit S.", "tag": "Floor cleaner" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
