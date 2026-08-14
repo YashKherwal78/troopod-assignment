@@ -102,6 +102,12 @@
                     height="{{ product.featured_image.height }}"
                     {% if stage_index == 0 %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
                   >
+                {%- else -%}
+                  {%- comment -%} Merchant hasn't picked a product/image yet -- show a generic
+                    placeholder bottle instead of empty space, same "graceful empty state" pattern
+                    as the product card's no-image icon. Replaced automatically the moment a real
+                    product image is set; never shown once real data exists. {%- endcomment -%}
+                  <img class="pl-hp pl-hp--d{{ forloop.index }} pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
                 {%- endif -%}
               {%- endfor -%}
               {%- if products.size > 0 -%}

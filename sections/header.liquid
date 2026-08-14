@@ -206,7 +206,13 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <span class="pl-brand-fallback">
+            <span class="pl-brand-fallback__mark">{{ 'icon-leaf-outline.svg' | inline_asset_content }}</span>
+            <span class="pl-brand-fallback__txt">
+              <span class="pl-brand-fallback__n1">{{ shop.name }}</span>
+              <span class="pl-brand-fallback__n2">Clean, simply</span>
+            </span>
+          </span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -249,7 +255,13 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <span class="pl-brand-fallback">
+            <span class="pl-brand-fallback__mark">{{ 'icon-leaf-outline.svg' | inline_asset_content }}</span>
+            <span class="pl-brand-fallback__txt">
+              <span class="pl-brand-fallback__n1">{{ shop.name }}</span>
+              <span class="pl-brand-fallback__n2">Clean, simply</span>
+            </span>
+          </span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}

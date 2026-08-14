@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 360" width="130" height="360" role="img" aria-label="Placeholder product bottle">
+<defs>
+<linearGradient id="pb-body" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#7a62c2" stop-opacity=".95"/>
+<stop offset="1" stop-color="#7a62c2" stop-opacity=".62"/>
+</linearGradient>
+</defs>
+<rect x="47" y="6" width="36" height="34" rx="8" fill="#7a62c2" opacity=".85"/>
+<rect x="52" y="34" width="26" height="20" fill="#7a62c2" opacity=".7"/>
+<rect x="16" y="66" width="98" height="278" rx="20" fill="url(#pb-body)"/>
+<rect x="30" y="132" width="70" height="96" rx="7" fill="#faf7fd" opacity=".85"/>
+<rect x="40" y="163" width="50" height="10" rx="2" fill="#7a62c2" opacity=".5"/>
+<rect x="46" y="188" width="38" height="8" rx="2" fill="#7a62c2" opacity=".3"/>
+</svg>

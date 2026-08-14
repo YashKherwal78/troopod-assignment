@@ -29,6 +29,26 @@
   font-size: 16.5px;
   color: #17102b;
 }
+/* Two-line brand mark (icon + wordmark + tagline), matching the prototype.
+   n1 stays driven by real shop.name (renamed correctly once the store is
+   renamed in Admin) -- only the "Clean, simply" tagline and the icon are
+   static, since that's permanent brand identity copy, not merchant data. */
+.header-wrapper .pl-brand-fallback { display: flex; align-items: center; gap: 11px; }
+.header-wrapper .pl-brand-fallback__mark {
+  width: 34px; height: 34px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(150deg, rgba(201, 118, 29, .20), rgba(75, 58, 143, .14));
+  border: 1px solid rgba(75, 58, 143, .18); color: #b8701c;
+}
+.header-wrapper .pl-brand-fallback__mark svg { width: 18px; height: 18px; }
+.header-wrapper .pl-brand-fallback__txt { display: flex; flex-direction: column; line-height: 1.05; text-align: left; }
+.header-wrapper .pl-brand-fallback__n1 {
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 14.5px; letter-spacing: .02em;
+  text-transform: uppercase; color: #17102b;
+}
+.header-wrapper .pl-brand-fallback__n2 {
+  font-family: 'Inter', sans-serif; font-size: 8.5px; font-weight: 600; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(36, 26, 61, .56); margin-top: 2px;
+}
 .header-wrapper .list-menu--inline {
   gap: 26px;
 }
