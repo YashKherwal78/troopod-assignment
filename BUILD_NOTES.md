@@ -11,45 +11,45 @@ progress rail (`purelane-scenes.liquid`), an announcement ticker (`purelane-tick
 replaces Dawn's default announcement bar), sticky mobile CTA (`purelane-sticky-cta.liquid`),
 Ingredients (`purelane-ingredients.liquid`), Pillars/"how it works" (`purelane-pillars.liquid`),
 Proof/stats with an auto-cycling product rotator (`purelane-proof.liquid`), Why-bundles
-(`purelane-whybundles.liquid`), and a trust bar (`purelane-trust.liquid`). That covers everything
-in the prototype except: the bundle-categories grid, the newsletter signup panel, a fully custom
-footer (Dawn's own footer is in place, unstyled to match), and the PDP (product detail page) —
-cut for time, not forgotten.
+(`purelane-whybundles.liquid`), a trust bar (`purelane-trust.liquid`), the bundle-categories grid
+(`purelane-categories.liquid`), and a newsletter signup panel (`purelane-signup.liquid`). That
+covers everything in the prototype except a fully custom footer (Dawn's own footer is in place,
+re-skinned via CSS to match, with real link-list navigation wired in) and the PDP (product detail
+page) — cut for time, not forgotten.
 
-**Verified live**: pushed to a real Shopify dev store (`q9hdic-gg.myshopify.com`, theme ID
-`157758488731`, via the Theme Access app + Shopify CLI) and confirmed by fetching the rendered
-page — all sections render, zero Liquid errors, `shopify theme check` passes clean (0 errors, 11
-pre-existing warnings, all in stock Dawn files I didn't touch). Editor:
-`https://q9hdic-gg.myshopify.com/admin/themes/157758488731/editor` (storefront password: `yiwiso`).
+**Verified live, with real store data**: pushed to a real Shopify **development store** (Partner-org
+linked), `q9hdic-gg-uidnykeq.myshopify.com`, theme ID `155748860096` (the live theme on this store).
+Editor: `https://q9hdic-gg-uidnykeq.myshopify.com/admin/themes/155748860096/editor` (storefront
+password: `gaodre`). `shopify theme check` passes clean (0 errors, 11 pre-existing warnings, all in
+stock Dawn files I didn't touch).
 
-Beyond the initial "renders without error" pass, every section went through a real
-**screenshot-compare-fix loop** against `reference/purelane-homepage.html` (Playwright, both pages
-open side by side, real browser, real computed styles inspected via `document.styleSheets` when a
-mismatch showed up) — not just DOM/Liquid-error checks. That loop caught and fixed real visual bugs
-that produced zero Liquid or CSS errors and were only visible once rendered (see "What I changed,
-and why," and the CSS-specificity bugs called out below).
+An earlier store (`q9hdic-gg.myshopify.com`) was a regular/trial store, not Partner-linked — that
+turned out to block proper Admin API scope approval for a custom app, so it was abandoned in favour
+of a real development store partway through. See "AI workflow notes" for the full story; only the
+new store is current.
 
-**Still not done, and why** — both are blocked on the exact same thing, real Admin API access:
-- **No products seeded.** The Theme Access token this build uses (`shptka_...`) only has scope for
-  theme files (Themes API) — it cannot create products, metaobjects, or anything else in the Admin
-  API, by design of the Theme Access app. Confirmed directly: a GraphQL call against
-  `/admin/api/2024-10/graphql.json` with this token returns `Invalid API key or access token`.
-  `shopify store auth`'s OAuth device-approval flow needs a human in a real, interactive browser
-  session, which this environment doesn't have. **Next step**: either the store owner creates a
-  custom app (Settings → Apps and sales channels → Develop apps) with
-  `read_products,write_products,read_metaobjects,write_metaobjects` scopes and hands me the
-  resulting `shpat_...` token, or seeds the 8+ products / creates the `combo` metaobject entries
-  directly in admin — I've documented exactly what's needed for both (product list below,
-  `metaobjects/combo.json` for the metaobject shape).
-- Because there are no products, the hero bundle carousel, Shop grid, Combos, Bundles' compare-at
-  totals, and the Proof rotator all correctly render their **empty/placeholder states** rather than
-  real content. That's intentional fallback behaviour (verified extensively via screenshots this
-  session), not a bug.
-- The `combo` metaobject **type definition itself** (`metaobjects/combo.json`) has also not been
-  created in the store's Content → Metaobjects yet — same Admin API blocker as above. Until it
-  exists, `#combos` shows a 5-card static preview built from the reference's own sample copy
-  (see `sections/purelane-combos.liquid`) so the section, and its horizontal-scroll behaviour, are
-  still demonstrable without real data.
+**Real data is seeded and live**, not just placeholder/empty states:
+- **12 products**, created and published to the Online Store channel via the Admin GraphQL API
+  (`productSet` + `productCreateMedia` + `publishablePublish`), covering the required edge cases:
+  one **sold out** (Copper, Bronze & Brass Cleaner — tracked inventory, 0 on hand, deny-oversell),
+  one with **no image** (Fabric Conditioner & Softener — falls back to the generic placeholder
+  bottle, same code path as an empty collection), and one with a deliberately **long title**
+  (clamped to 2 lines via the card's `-webkit-line-clamp`). The other 9 carry real prices,
+  compare-at prices, and product photography (the reference's own extracted SVG art, uploaded via
+  the GitHub-hosted raw file URL as the media source).
+- **6 collections** (Bestsellers, Full range, and 4 category collections) tying the Shop grid, Range
+  shelf, and Bundle categories sections to real curated product sets instead of "all products."
+- **The `combo` metaobject type is created** in the store (Content → Metaobjects → Combo), with its
+  full field schema (`metaobjects/combo.json`), and **5 real combo entries** — the reference's own
+  Kitchen essentials / Laundry care bundle / Complete home bundle / Bathroom deep clean / Hard water
+  solution kit — each computing its "you save ₹X" from the real prices of the products it
+  references, live, in Liquid.
+- Hero's bundle-size carousel, the Bundles tier cards, the Shop grid, the Range shelf, and Bundle
+  categories are all wired in `templates/index.json` to these real products/collections/combos.
+
+Getting here needed the Admin API access documented as blocked in earlier drafts of this file to
+actually get resolved — see "AI workflow notes" for what that took and what it caught along the way
+(including a real, previously-invisible CSS bug that only real product photography could surface).
 
 ## What I'd flag about the original file
 - Two full `<style>` blocks: a complete dark "V1" palette and a complete light "V2" palette that
@@ -139,11 +139,11 @@ and why," and the CSS-specificity bugs called out below).
 - **CSS specificity & `div:empty` resilience**:
   Applied compound selectors (e.g. `.purelane .pl-range.pl-glass`, `.purelane .pl-cat.pl-glass`) and explicit `display: block` declarations across all new sections to prevent stylesheet load-order collisions and Dawn `div:empty` collapse.
 - **Linting & 4-viewport visual verification**:
-  `npx shopify theme check --fail-level=error` passing with 0 errors. Verified live on dev store (`q9hdic-gg.myshopify.com`, theme ID `157758488731`) across all 4 standard viewports: 1440×900, 1280×800, 1024×768, and 390×844.
+  `npx shopify theme check --fail-level=error` passing with 0 errors. Verified live across all 4
+  standard viewports: 1440×900, 1280×800, 1024×768, and 390×844. (Store since moved to a proper
+  Partner-linked development store, `q9hdic-gg-uidnykeq.myshopify.com` — see "Status" at the top.)
 
 ## What I'd do with more time
-- Seed the 8+ products (incl. sold-out / no-image / long-title) and create the `combo` metaobject
-  entries for real, once Admin API access is sorted — see "Still not done" above.
 - Wire a real review app's rating metafield (`product.metafields.reviews.rating`, the Judge.me/
   Loox convention) into the Shop card instead of leaving it optional.
 - Port the PDP (product detail page) layout from `reference/purelane-homepage.html` into `main-product.liquid` / dedicated Purelane product template.
@@ -197,22 +197,48 @@ and why," and the CSS-specificity bugs called out below).
     reference's actual varied product silhouettes — not a functional bug, but a fidelity gap only
     visible in a screenshot, fixed by extracting all 14 real inline-SVG assets from the reference
     file via a small Python/regex/base64 script and wiring them in contextually.
-- **A real environment blocker, not a code problem**: full Admin API write access (needed for
-  product seeding and creating the `combo` metaobject definition) was never obtained. The Theme
-  Access token in use is scoped to theme files only by design and cannot touch products or
-  metaobjects (confirmed directly — a GraphQL call with it returns an auth error, not a permissions
-  error, meaning it's the wrong *kind* of token, not a scopes problem). `shopify store auth`'s OAuth
-  flow needs a human to approve in a real interactive browser, which this environment doesn't have.
-  This remains the single largest gap between "theme is correct" and "store looks fully populated."
-- **What I'd systematise for twenty more of these**: (1) resolve Admin API access *first*, before
-  writing any product-dependent code, so seeding isn't the long pole at the end — it never got
-  resolved here and is still blocking two of the required deliverables; (2) run the screenshot-
-  compare loop *continuously*, one section at a time as it's built, rather than as a separate later
-  pass — several of the bugs above (padding, `:empty` collisions) were introduced early and sat
-  undetected across many sections until a dedicated visual pass finally caught them; (3) whenever a
+- **The Admin API blocker eventually got resolved, and it took several real environment problems,
+  not one**: the first store (`q9hdic-gg.myshopify.com`) was created directly rather than through a
+  Shopify Partner organization, and a custom app's scope grants on that kind of store never actually
+  took effect — the app showed the configured scopes in its own settings, but every scoped GraphQL
+  field (`products`, `metaobjectDefinitions`) kept returning `ACCESS_DENIED` with an empty
+  `accessScopes` list from the API's own introspection, regardless of what the Dev Dashboard showed.
+  That diagnosis (config vs. actually-granted are different things, and the API's own
+  `currentAppInstallation.accessScopes` is the source of truth, not the dashboard) is what led to
+  abandoning that store for a real Partner-linked development store instead of continuing to debug a
+  structurally broken setup. On the new store, the same client-credentials flow worked immediately.
+  Two more scope gaps surfaced only by trying the real calls and reading the exact error, not by
+  reading docs up front: `read_metaobject_definitions`/`write_metaobject_definitions` are separate
+  from `read_metaobjects`/`write_metaobjects` (one manages the type/schema, the other the entries —
+  granting one does not imply the other), and products created via `productSet` are **not**
+  automatically published to the Online Store sales channel — they need an explicit
+  `publishablePublish` call per product/collection, which itself needs `read_publications`/
+  `write_publications`, a scope nothing earlier in the flow suggested was necessary. Each of these
+  was a several-minute detour that a single upfront "here is the full scope list you'll eventually
+  need" would have collapsed into one round trip instead of three.
+- **A third real bug, only findable with real product data**: once real products existed with actual
+  `srcset`/`sizes` attributes (the placeholder `<img>` never had these), the shared product card's
+  CSS (`width: auto` on `.pl-card__shot img`) broke completely — per spec, the `sizes` attribute
+  drives an image's used width whenever CSS width computes to `auto`, which silently overrides
+  `max-height`/`object-fit` and blows the photo out of its fixed-height card. This is the same shape
+  of bug as the `:empty` and specificity bugs above (renders with zero errors, only wrong once you
+  actually look at it) but a new *category* — one that specifically required real, published product
+  data to ever trigger, meaning no amount of placeholder-state screenshot review could have caught
+  it. That's a limit worth naming plainly: a build verified only against its own empty/placeholder
+  states is not fully verified, no matter how many of those screenshots you take.
+- **What I'd systematise for twenty more of these**: (1) get Admin API access working *first*, before
+  writing any product-dependent code, and specifically verify it by reading
+  `currentAppInstallation.accessScopes` from the API directly rather than trusting a dashboard's
+  scope-configuration screen — the two can disagree; (2) request the full scope list needed for the
+  whole job up front (products, metaobjects *and* metaobject definitions, files, publications) rather
+  than discovering each one by hitting its specific `ACCESS_DENIED` error in turn; (3) run the
+  screenshot-compare loop *continuously*, one section at a time as it's built, rather than as a
+  separate later pass — several bugs (padding, `:empty` collisions) were introduced early and sat
+  undetected across many sections until a dedicated visual pass finally caught them; (4) whenever a
   bug is found in one placeholder/fallback code path, immediately grep for the same pattern in every
   other section's fallback path — the combos 3-vs-5 bug was a repeat of a class of bug already fixed
-  once elsewhere in the same file set, and treating it as a one-off rather than a pattern is exactly
-  how it survived; (4) keep `theme check` in the loop throughout, not just at the start — it's free
-  and catches a different, complementary class of error (structural/schema) than screenshots do
-  (visual/computed-style).
+  once elsewhere in the same file set; (5) treat "verified against placeholder state" and "verified
+  against real data" as two different claims — the `sizes`/`width:auto` bug only existed in the gap
+  between them, and no amount of placeholder-only testing would have found it; (6) keep `theme check`
+  in the loop throughout — it's free and catches a different, complementary class of error
+  (structural/schema) than screenshots do (visual/computed-style).
