@@ -43,7 +43,16 @@
 .purelane :focus-visible { outline: 2px solid var(--pl-accent); outline-offset: 3px; border-radius: 6px; }
 
 .purelane .pl-wrap { max-width: var(--pl-maxw); margin: 0 auto; padding: 0 18px; }
-.purelane .pl-sec { position: relative; padding: var(--pl-sec-y) 0; }
+/* .purelane.pl-sec (compound, no space) -- NOT .purelane .pl-sec. Every
+   section root carries both classes on the SAME element
+   (class="purelane pl-sec pl-whatever"), so a descendant-combinator
+   selector here could never match: it requires .pl-sec to be a
+   *descendant* of a separate .purelane ancestor, which it isn't -- it
+   IS the .purelane element. This silently zeroed out the padding that
+   provides vertical rhythm between every section on the page (12 of the
+   13 sections use this class), which is why everything read as
+   "cramped" / touching at the borders. */
+.purelane.pl-sec { position: relative; padding: var(--pl-sec-y) 0; }
 .purelane .pl-sec-pad { padding: clamp(26px, 3.4vw, 40px); }
 
 /* ---------- type ---------- */
