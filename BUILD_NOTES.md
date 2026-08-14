@@ -28,6 +28,12 @@ turned out to block proper Admin API scope approval for a custom app, so it was 
 of a real development store partway through. See "AI workflow notes" for the full story; only the
 new store is current.
 
+**Performance, measured, not just asserted**: Lighthouse (mobile, throttled) against the live
+homepage — Performance 96, Accessibility 89, Best Practices 96, SEO 91. Core Web Vitals: LCP 2.1s,
+TBT 0ms, CLS 0. Hero's carousel autoplay was also slowed down less than intended (3.8s/slide,
+merchant-editable 2–8s range) — tightened the default to 2.2s so the bundle-size crossfade reads as
+active rather than static on first paint.
+
 **Real data is seeded and live**, not just placeholder/empty states:
 - **12 products**, created and published to the Online Store channel via the Admin GraphQL API
   (`productSet` + `productCreateMedia` + `publishablePublish`), covering the required edge cases:

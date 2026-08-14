@@ -14,7 +14,7 @@
     var dotsWrap = wrap ? wrap.querySelector('.pl-hdots') : null;
     var slides = [].slice.call(stage.querySelectorAll('.pl-hslide'));
     var dots = dotsWrap ? [].slice.call(dotsWrap.querySelectorAll('button')) : [];
-    var interval = parseInt(stage.getAttribute('data-autoplay'), 10) || 3800;
+    var interval = parseInt(stage.getAttribute('data-autoplay'), 10) || 2200;
     var i = 0;
     var timer = null;
 
