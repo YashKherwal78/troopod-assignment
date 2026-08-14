@@ -76,17 +76,26 @@
 .purelane .pl-hslide.pl-hslide--on { opacity: 1; pointer-events: auto; }
 
 .purelane .pl-hp {
-  position: relative; width: auto; flex: 0 0 auto;
+  /* width: auto + height:<percent> sizes a plain <img> purely from its own
+     intrinsic aspect ratio. The reference's hand-drawn bottle art is all
+     narrow (aspect-ratio ~0.32-0.63) so this never overflowed there, but
+     real Shopify product photos run much wider/squarer -- at the same
+     height percentage they can be 2-3x the width, pushing past the fixed
+     560px stage and over the heading text. max-width caps the box a real
+     photo can claim regardless of its aspect ratio; object-fit: contain
+     (already set) then letterboxes the image inside that box instead of
+     distorting it. */
+  position: relative; width: auto; max-width: 100%; flex: 0 0 auto;
   object-fit: contain; object-position: center bottom;
   filter: drop-shadow(0 14px 22px rgba(0, 74, 66, .15));
 }
 .purelane .pl-hp--placeholder { opacity: .6; }
 .purelane .pl-hslide[data-count="1"] .pl-hp { height: 100%; z-index: 3; }
-.purelane .pl-hslide[data-count="2"] .pl-hp--d1 { height: 80%; margin-right: -8%; z-index: 1; }
-.purelane .pl-hslide[data-count="2"] .pl-hp--d2 { height: 97%; z-index: 3; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d1 { height: 75%; margin-right: -8%; z-index: 1; order: 1; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d2 { height: 79%; margin-left: -8%; z-index: 2; order: 3; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d3 { height: 97%; z-index: 3; order: 2; }
+.purelane .pl-hslide[data-count="2"] .pl-hp--d1 { height: 80%; max-width: 62%; margin-right: -8%; z-index: 1; }
+.purelane .pl-hslide[data-count="2"] .pl-hp--d2 { height: 97%; max-width: 74%; z-index: 3; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d1 { height: 75%; max-width: 44%; margin-right: -8%; z-index: 1; order: 1; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d2 { height: 79%; max-width: 44%; margin-left: -8%; z-index: 2; order: 3; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d3 { height: 97%; max-width: 54%; z-index: 3; order: 2; }
 
 /* .pl-ptag.pl-glass-2: same specificity-vs-cascade-order fix as
    .pl-hero__badges.pl-glass-2 above -- this element also carries pl-glass-2,
