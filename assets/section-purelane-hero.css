@@ -90,12 +90,18 @@
   filter: drop-shadow(0 14px 22px rgba(0, 74, 66, .15));
 }
 .purelane .pl-hp--placeholder { opacity: .6; }
-.purelane .pl-hslide[data-count="1"] .pl-hp { height: 100%; z-index: 3; }
-.purelane .pl-hslide[data-count="2"] .pl-hp--d1 { height: 80%; max-width: 62%; margin-right: -8%; z-index: 1; }
-.purelane .pl-hslide[data-count="2"] .pl-hp--d2 { height: 97%; max-width: 74%; z-index: 3; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d1 { height: 75%; max-width: 44%; margin-right: -8%; z-index: 1; order: 1; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d2 { height: 79%; max-width: 44%; margin-left: -8%; z-index: 2; order: 3; }
-.purelane .pl-hslide[data-count="3"] .pl-hp--d3 { height: 97%; max-width: 54%; z-index: 3; order: 2; }
+/* max-width values below are measured off the reference file's own rendered
+   bottle widths at this same 560px stage (38%/30-35%/28-35% of stage width
+   for the 1/2/3-up slides respectively), not guessed -- a real product photo
+   that's proportionally wider than the reference's narrow bottle art gets
+   letterboxed down to that same footprint by object-fit: contain rather
+   than rendering at its native, much wider aspect ratio. */
+.purelane .pl-hslide[data-count="1"] .pl-hp { height: 100%; max-width: 40%; z-index: 3; }
+.purelane .pl-hslide[data-count="2"] .pl-hp--d1 { height: 80%; max-width: 32%; margin-right: -8%; z-index: 1; }
+.purelane .pl-hslide[data-count="2"] .pl-hp--d2 { height: 97%; max-width: 37%; z-index: 3; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d1 { height: 75%; max-width: 30%; margin-right: -8%; z-index: 1; order: 1; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d2 { height: 79%; max-width: 32%; margin-left: -8%; z-index: 2; order: 3; }
+.purelane .pl-hslide[data-count="3"] .pl-hp--d3 { height: 97%; max-width: 37%; z-index: 3; order: 2; }
 
 /* .pl-ptag.pl-glass-2: same specificity-vs-cascade-order fix as
    .pl-hero__badges.pl-glass-2 above -- this element also carries pl-glass-2,
