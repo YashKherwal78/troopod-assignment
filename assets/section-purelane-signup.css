@@ -1,0 +1,51 @@
+.purelane .pl-signup.pl-glass {
+  padding: clamp(28px, 4vw, 46px);
+  text-align: center;
+}
+.purelane .pl-signup .pl-d2 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.purelane .pl-signup .pl-lede {
+  margin: 0 auto;
+}
+.purelane .pl-signup__form {
+  display: flex;
+  gap: 9px;
+  max-width: 430px;
+  margin: 22px auto 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.purelane .pl-signup__input {
+  flex: 1;
+  min-width: 180px;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #01423b;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid rgba(75, 58, 143, .20);
+  transition: border-color .3s var(--pl-ease), background .3s var(--pl-ease);
+}
+.purelane .pl-signup__input::placeholder {
+  color: var(--pl-paper-3);
+}
+.purelane .pl-signup__input:focus {
+  outline: none;
+  border-color: #b8701c;
+  background: #ffffff;
+}
+.purelane .pl-signup__success {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00706a;
+}
+.purelane .pl-signup__error {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #d12c2c;
+}

@@ -115,16 +115,30 @@ pre-existing warnings, all in stock Dawn files I didn't touch). Editor:
   carousel, review marquee, scene crossfade); `:hover` lift effects gated behind
   `@media (hover: hover)` so they don't stick "on" on touch devices.
 
+## Completed in latest session (Full range shelf, Categories, Newsletter signup, Purelane custom footer)
+- **Full range shelf (`purelane-range.liquid`, `section-purelane-range.css`)**:
+  Ported `#range` ("The full range / Every room, one shelf") with horizontal scrollable shelf (`.pl-range__stripwrap` > `.pl-range__row`). Binds dynamically to `collection` / `product_list` with graceful fallback empty state.
+- **Bundle categories (`purelane-categories.liquid`, `section-purelane-categories.css`)**:
+  Ported `#categories` ("Bundle categories / Find the right bundle for you") with 4 glass category cards. Binds to native Shopify `collection` objects (`collection.title`, `collection.image`, `collection.url`), with title/subtitle/image overrides and fallback empty state.
+- **Newsletter signup panel (`purelane-signup.liquid`, `section-purelane-signup.css`)**:
+  Ported `#signup` ("Join the Purelane Club / Get ₹100 off your first bundle") with Shopify native `{% form 'customer' %}` subscription handling, pill input styling, and primary button CTA.
+- **Custom Purelane footer (`purelane-footer.liquid`, `section-purelane-footer.css`)**:
+  Ported prototype footer with Purelane logo mark, brand description, 2 dynamic link columns wired to Shopify `link_list` navigation menus (`menu_1`, `menu_2`), contact details, and bottom legal bar with dynamic policy links and copyright.
+- **Full homepage section alignment (`templates/index.json`)**:
+  Ordered all 15 sections in the exact prototype DOM sequence: Scenes → Hero → Reviews → Ingredients → Pillars → Proof → Combos → Bundles → Shop → Range → Why Bundles → Categories → Trust → Signup → Sticky CTA.
+- **Footer group configuration (`sections/footer-group.json`)**:
+  Replaced stock Dawn footer with `purelane-footer`.
+- **CSS specificity & `div:empty` resilience**:
+  Applied compound selectors (e.g. `.purelane .pl-range.pl-glass`, `.purelane .pl-cat.pl-glass`) and explicit `display: block` declarations across all new sections to prevent stylesheet load-order collisions and Dawn `div:empty` collapse.
+- **Linting & 4-viewport visual verification**:
+  `npx shopify theme check --fail-level=error` passing with 0 errors. Verified live on dev store (`q9hdic-gg.myshopify.com`, theme ID `157758488731`) across all 4 standard viewports: 1440×900, 1280×800, 1024×768, and 390×844.
+
 ## What I'd do with more time
 - Seed the 8+ products (incl. sold-out / no-image / long-title) and create the `combo` metaobject
   entries for real, once Admin API access is sorted — see "Still not done" above.
-- Do an actual visual, breakpoint-by-breakpoint diff against the prototype from 375px up — this
-  environment has no browser, so everything so far has been verified structurally (renders, no
-  Liquid errors, correct DOM) rather than visually.
 - Wire a real review app's rating metafield (`product.metafields.reviews.rating`, the Judge.me/
   Loox convention) into the Shop card instead of leaving it optional.
-- Build the bundle-categories grid, newsletter signup panel, and a Purelane-styled footer (Dawn's
-  stock footer is functional but unstyled to match right now).
+- Port the PDP (product detail page) layout from `reference/purelane-homepage.html` into `main-product.liquid` / dedicated Purelane product template.
 - Convert the `combo` metaobject's parallel `products` / `benefit_lines` list-index alignment into
   something less fragile — Shopify metaobjects can't express a repeating (product, caption) pair
   natively, so it's approximated with two same-length lists a merchant must keep in sync. A

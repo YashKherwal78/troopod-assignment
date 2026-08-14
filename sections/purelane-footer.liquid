@@ -1,0 +1,165 @@
+{{ 'purelane-base.css' | asset_url | stylesheet_tag }}
+{{ 'section-purelane-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="purelane purelane-footer" id="Footer-{{ section.id }}" data-scene-zone data-scene-label="Footer">
+  <div class="pl-wrap">
+    <div class="pl-fgrid">
+      <div class="pl-fcol">
+        <a class="pl-brand" href="{{ routes.root_url }}">
+          <span class="pl-brand__mark">
+            {{ 'icon-leaf-outline.svg' | inline_asset_content }}
+          </span>
+          <span class="pl-brand__txt">
+            <span class="pl-brand__n1">{{ section.settings.brand_heading | default: shop.name | default: 'Purelane' }}</span>
+            <span class="pl-brand__n2">{{ section.settings.brand_subheading | default: 'Clean, simply' }}</span>
+          </span>
+        </a>
+        <p style="max-width:30ch">{{ section.settings.brand_text | default: 'Effective cleaning, powered by nature. Made for Indian homes since day one.' }}</p>
+      </div>
+
+      <div class="pl-fcol">
+        <h5>{{ section.settings.menu_1_heading | default: 'Shop' }}</h5>
+        {%- if section.settings.menu_1 != blank and linklists[section.settings.menu_1].links.size > 0 -%}
+          {%- for link in linklists[section.settings.menu_1].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="#shop">Bestsellers</a>
+          <a href="#shop">Kitchen</a>
+          <a href="#shop">Laundry</a>
+          <a href="#shop">Home</a>
+          <a href="#shop">Skin</a>
+          <a href="#bundles">Starter kits</a>
+        {%- endif -%}
+      </div>
+
+      <div class="pl-fcol">
+        <h5>{{ section.settings.menu_2_heading | default: 'About' }}</h5>
+        {%- if section.settings.menu_2 != blank and linklists[section.settings.menu_2].links.size > 0 -%}
+          {%- for link in linklists[section.settings.menu_2].links -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="#how">How it works</a>
+          <a href="#ingredients">Sustainability</a>
+          <a href="#proof">FAQs</a>
+          <a href="#voices">Reviews</a>
+        {%- endif -%}
+      </div>
+
+      <div class="pl-fcol">
+        <h5>{{ section.settings.contact_heading | default: 'Get in touch' }}</h5>
+        {%- if section.settings.email != blank -%}
+          <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+        {%- endif -%}
+        {%- if section.settings.phone != blank -%}
+          <a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a>
+        {%- endif -%}
+        {%- if section.settings.company_name != blank -%}
+          <p class="pl-fcol__note">{{ section.settings.company_name }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="pl-fbot">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.copyright | default: 'Purelane Eco Products Private Limited' }}</span>
+      <div class="pl-fbot__links">
+        {%- if shop.policies.size > 0 -%}
+          {%- for policy in shop.policies -%}
+            <a href="{{ policy.url }}">{{ policy.title }}</a>{% unless forloop.last %} &middot; {% endunless %}
+          {%- endfor -%}
+        {%- else -%}
+          <a href="#">Privacy</a> &middot;
+          <a href="#">Terms</a> &middot;
+          <a href="#">Refunds</a> &middot;
+          <a href="#">Contact</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Purelane footer",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_heading",
+      "label": "Brand heading",
+      "default": "Purelane"
+    },
+    {
+      "type": "text",
+      "id": "brand_subheading",
+      "label": "Brand tagline",
+      "default": "Clean, simply"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand description",
+      "default": "Effective cleaning, powered by nature. Made for Indian homes since day one."
+    },
+    {
+      "type": "text",
+      "id": "menu_1_heading",
+      "label": "First menu heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "First menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_heading",
+      "label": "Second menu heading",
+      "default": "About"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Second menu"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact column heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "hello@purelane.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone number",
+      "default": "+91 9930 123 234"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Company legal entity",
+      "default": "Purelane Eco Products Pvt Ltd"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright line",
+      "default": "Purelane Eco Products Private Limited"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane footer"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+.purelane .pl-cats {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 900px) {
+  .purelane .pl-cats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.purelane .pl-cat.pl-glass {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform .4s var(--pl-ease), box-shadow .4s var(--pl-ease);
+  text-decoration: none;
+}
+.purelane .pl-cat.pl-glass:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 26px 58px rgba(58, 44, 112, .18), var(--pl-g-inset);
+}
+.purelane .pl-cat__ph {
+  height: 194px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 14px 12px 0;
+  position: relative;
+}
+.purelane .pl-cat__ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: radial-gradient(110% 80% at 50% 6%, rgba(255, 255, 255, .66), rgba(236, 230, 247, .30) 58%, transparent 80%);
+  pointer-events: none;
+}
+.purelane .pl-cat__img {
+  position: relative;
+  height: 176px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0, 74, 66, .14));
+  transition: transform .35s var(--pl-ease);
+}
+.purelane .pl-cat.pl-glass:hover .pl-cat__img {
+  transform: scale(1.04);
+}
+.purelane .pl-cat__txt {
+  padding: 14px 16px 18px;
+  border-top: 1px solid rgba(75, 58, 143, .11);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.purelane .pl-cat__txt h3,
+.purelane .pl-cat__txt h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--pl-surface);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+.purelane .pl-cat__txt p {
+  font-size: 11.8px;
+  color: var(--pl-paper-3);
+  line-height: 1.4;
+}
+
+.purelane .pl-cats__empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 30px;
+  font-size: 13px;
+  color: var(--pl-paper-3);
+}
+
+@media (max-width: 760px) {
+  .purelane .pl-cat__ph {
+    height: 158px;
+  }
+  .purelane .pl-cat__img {
+    height: 142px;
+  }
+}

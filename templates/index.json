@@ -116,6 +116,10 @@
         "products_to_show": 8
       }
     },
+    "purelane_range": {
+      "type": "purelane-range",
+      "settings": {}
+    },
     "purelane_whybundles": {
       "type": "purelane-whybundles",
       "blocks": {
@@ -127,6 +131,17 @@
       "block_order": ["reason-1", "reason-2", "reason-3", "reason-4"],
       "settings": {}
     },
+    "purelane_categories": {
+      "type": "purelane-categories",
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more" } },
+        "cat-2": { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect" } },
+        "cat-3": { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash" } },
+        "cat-4": { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
+      "settings": {}
+    },
     "purelane_trust": {
       "type": "purelane-trust",
       "blocks": {
@@ -136,6 +151,10 @@
         "trust-4": { "type": "item", "settings": { "icon": "globe", "text": "Made in\nIndia" } }
       },
       "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "settings": {}
+    },
+    "purelane_signup": {
+      "type": "purelane-signup",
       "settings": {}
     },
     "purelane_sticky_cta": {
@@ -158,8 +177,11 @@
     "purelane_combos",
     "purelane_bundles",
     "purelane_shop",
+    "purelane_range",
     "purelane_whybundles",
+    "purelane_categories",
     "purelane_trust",
+    "purelane_signup",
     "purelane_sticky_cta"
   ]
 }
