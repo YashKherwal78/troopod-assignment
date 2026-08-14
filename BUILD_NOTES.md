@@ -18,30 +18,38 @@ cut for time, not forgotten.
 
 **Verified live**: pushed to a real Shopify dev store (`q9hdic-gg.myshopify.com`, theme ID
 `157758488731`, via the Theme Access app + Shopify CLI) and confirmed by fetching the rendered
-page — all sections render, zero Liquid errors, `shopify theme check` passes clean (0 errors, 12
+page — all sections render, zero Liquid errors, `shopify theme check` passes clean (0 errors, 11
 pre-existing warnings, all in stock Dawn files I didn't touch). Editor:
 `https://q9hdic-gg.myshopify.com/admin/themes/157758488731/editor` (storefront password: `yiwiso`).
 
-**Still not done, and why**:
-- **No products seeded yet.** I don't have Admin API write access to the store — the Theme Access
-  token I was given only covers theme files. `shopify store auth`/`store execute` (the CLI's own
-  Admin GraphQL passthrough) is set up in the repo's workflow but the OAuth device-approval step
-  needs a human in a browser, which stalled across several attempts (browser not opening reliably
-  in a non-interactive shell, then a genuine "Unauthorized Access" error on the target store —
-  likely because it isn't linked to a Partner organization the CLI recognizes). **Next step**:
-  either fix the store's Partner-org linkage and re-run `shopify store auth --store <domain>
-  --scopes read_products,write_products,read_metaobjects,write_metaobjects,read_files,write_files`,
-  or paste products in manually — ask for the seed list if needed.
-- Because there are no products, the hero bundle carousel, Combos, Bundles' compare-at totals, and
-  the Proof rotator all render their correct **empty states** rather than real content right now.
-  That's intentional fallback behaviour, not a bug — confirm by checking for Liquid errors (there
-  are none) rather than assuming "looks empty" means "broken."
-- The `combo` metaobject definition (`metaobjects/combo.json`) is documented but not yet created in
-  the store's Content → Metaobjects — needs the same Admin API access as product seeding.
-- No pixel-by-pixel breakpoint diff against the prototype has been done with a real browser (this
-  environment has no browser/screenshot tool) — verification so far is "renders without server
-  errors + correct DOM structure," not "looks visually identical." Do that pass once products
-  exist and there's something to actually look at.
+Beyond the initial "renders without error" pass, every section went through a real
+**screenshot-compare-fix loop** against `reference/purelane-homepage.html` (Playwright, both pages
+open side by side, real browser, real computed styles inspected via `document.styleSheets` when a
+mismatch showed up) — not just DOM/Liquid-error checks. That loop caught and fixed real visual bugs
+that produced zero Liquid or CSS errors and were only visible once rendered (see "What I changed,
+and why," and the CSS-specificity bugs called out below).
+
+**Still not done, and why** — both are blocked on the exact same thing, real Admin API access:
+- **No products seeded.** The Theme Access token this build uses (`shptka_...`) only has scope for
+  theme files (Themes API) — it cannot create products, metaobjects, or anything else in the Admin
+  API, by design of the Theme Access app. Confirmed directly: a GraphQL call against
+  `/admin/api/2024-10/graphql.json` with this token returns `Invalid API key or access token`.
+  `shopify store auth`'s OAuth device-approval flow needs a human in a real, interactive browser
+  session, which this environment doesn't have. **Next step**: either the store owner creates a
+  custom app (Settings → Apps and sales channels → Develop apps) with
+  `read_products,write_products,read_metaobjects,write_metaobjects` scopes and hands me the
+  resulting `shpat_...` token, or seeds the 8+ products / creates the `combo` metaobject entries
+  directly in admin — I've documented exactly what's needed for both (product list below,
+  `metaobjects/combo.json` for the metaobject shape).
+- Because there are no products, the hero bundle carousel, Shop grid, Combos, Bundles' compare-at
+  totals, and the Proof rotator all correctly render their **empty/placeholder states** rather than
+  real content. That's intentional fallback behaviour (verified extensively via screenshots this
+  session), not a bug.
+- The `combo` metaobject **type definition itself** (`metaobjects/combo.json`) has also not been
+  created in the store's Content → Metaobjects yet — same Admin API blocker as above. Until it
+  exists, `#combos` shows a 5-card static preview built from the reference's own sample copy
+  (see `sections/purelane-combos.liquid`) so the section, and its horizontal-scroll behaviour, are
+  still demonstrable without real data.
 
 ## What I'd flag about the original file
 - Two full `<style>` blocks: a complete dark "V1" palette and a complete light "V2" palette that
@@ -150,32 +158,61 @@ pre-existing warnings, all in stock Dawn files I didn't touch). Editor:
 ## AI workflow notes
 - Worked in Claude Code directly in an editor session against a real repo and a real (if
   password-protected) dev store — not a one-shot generation. Every section was written, pushed,
-  and checked before moving to the next.
-- **What worked well**: reading and auditing the full prototype file before writing any code meant
-  the "reuse a card component," "don't hardcode data," and "no-image/sold-out state" requirements
-  were caught from the source rather than needing reminders mid-build. Getting `shopify theme
-  check` installed and running early turned "did I write valid Liquid" from a guess into a
-  10-second automated check — it caught a schema error immediately that would otherwise have taken
-  a manual `theme push` round-trip to discover.
-- **Where it needed correction, twice, from the same root cause**: I initially assumed things about
-  Shopify's environment instead of checking — once assuming Dawn's own icons would visually match
-  the prototype (they didn't, caught from a real screenshot the user sent), and once assuming
-  Shopify Liquid has a `newline` global variable (it doesn't, also caught from a screenshot showing
-  text rendered one letter per line). Both bugs produced *zero* Liquid syntax errors and looked
-  fine in raw markup — they were only visible once actually rendered and looked at. Lesson: for a
-  visual build like this, "the code runs without error" and "the code is correct" are different
-  claims, and only a real screenshot closes that gap — theme-check and curl-based smoke tests
-  couldn't have caught either issue.
-- **A real environment blocker, not a code problem**: getting Admin API write access without a
-  pre-existing custom app took several attempts — `shopify store auth`'s OAuth flow needs a human
-  to approve in a real browser, which doesn't work smoothly from a non-interactive shell (auto-open
-  silently failed more than once, then a genuine store/Partner-org linkage error). This is the
-  actual remaining blocker on product seeding, not a scope or code decision.
-- **What I'd systematise for twenty more of these**: (1) get `theme check` running before writing
-  the first section, not after several are done — it's free and catches real errors in seconds;
-  (2) build a small local smoke-test habit (push → curl the rendered page → grep for the section's
-  own class names and for `Liquid error`) as a matter of course after every push, since it's cheap
-  and catches structural regressions immediately; (3) for anything visual, get a real screenshot
-  before declaring a section "done" — static analysis alone missed two real, user-visible bugs that
-  a two-second look at a rendered page caught instantly; (4) resolve store/Admin-API access *first*,
-  before writing product-dependent code, so seeding isn't the long pole at the end.
+  and checked before moving to the next, then re-verified in a second, much longer pass described
+  below.
+- **What worked well early**: reading and auditing the full prototype file before writing any code
+  meant the "reuse a card component," "don't hardcode data," and "no-image/sold-out state"
+  requirements were caught from the source rather than needing reminders mid-build. Getting
+  `shopify theme check` installed and running early turned "did I write valid Liquid" from a guess
+  into a 10-second automated check — it caught a schema error immediately that would otherwise have
+  taken a manual `theme push` round-trip to discover.
+- **The real turning point was a dedicated screenshot-compare-fix loop**, once it became clear
+  "renders without error" and "looks like the reference" are different claims. Set up Playwright to
+  open the live theme and `reference/purelane-homepage.html` side by side at matching viewports and
+  scroll positions, then for every visual mismatch, used `page.evaluate()` to walk
+  `document.styleSheets` and find the actual matching CSS rule rather than guessing at a fix. That
+  process, repeated section by section, found real bugs static analysis and theme-check could never
+  have caught:
+  - Two **CSS specificity bugs** from careless selector authorship: `.purelane .pl-sec` (descendant
+    combinator — can never match an element that must carry both classes at once) instead of
+    `.purelane.pl-sec` (compound selector), which silently zeroed out vertical padding on 12 of 13
+    sections theme-wide; and the same descendant/compound mixup on `.pl-hero__badges.pl-glass-2`,
+    where an unrelated rule with equal specificity was winning the cascade by load order.
+  - Two collisions with **Dawn's own base CSS conventions** I didn't know to check for up front:
+    `div:empty{display:none}` and `a:empty{display:none}`, which silently hid the entire
+    JS-populated background scene system and the scroll-progress rail (both start as intentionally
+    empty elements that JS fills in) — neither produced a JS error, they just never became visible.
+  - A `split: newline` bug (Liquid has no `newline` variable; splitting on a blank delimiter splits
+    character-by-character), which rendered three separate pieces of text one letter per line, with
+    zero Liquid syntax errors and structurally fine raw HTML.
+  - Placeholder/fallback logic bugs that only showed up as "wrong count" or "missing content" when
+    actually looked at: a hero bottle fallback nested inside a `for product in products` loop that
+    could never fire when the list was empty; a hardcoded `(1..4)` placeholder count instead of
+    reading the real `products_to_show` setting; and, most recently, a combos empty-state that only
+    showed 3 sample cards where the reference has 5 — caught by the user, not by me, which is a
+    real miss: I'd already built the exact same "count mismatch" bug once (Shop grid) and didn't
+    generalize the lesson to check every other placeholder loop for the same class of bug at the
+    same time.
+  - Generic, repeated placeholder art (one bottle shape reused everywhere) instead of the
+    reference's actual varied product silhouettes — not a functional bug, but a fidelity gap only
+    visible in a screenshot, fixed by extracting all 14 real inline-SVG assets from the reference
+    file via a small Python/regex/base64 script and wiring them in contextually.
+- **A real environment blocker, not a code problem**: full Admin API write access (needed for
+  product seeding and creating the `combo` metaobject definition) was never obtained. The Theme
+  Access token in use is scoped to theme files only by design and cannot touch products or
+  metaobjects (confirmed directly — a GraphQL call with it returns an auth error, not a permissions
+  error, meaning it's the wrong *kind* of token, not a scopes problem). `shopify store auth`'s OAuth
+  flow needs a human to approve in a real interactive browser, which this environment doesn't have.
+  This remains the single largest gap between "theme is correct" and "store looks fully populated."
+- **What I'd systematise for twenty more of these**: (1) resolve Admin API access *first*, before
+  writing any product-dependent code, so seeding isn't the long pole at the end — it never got
+  resolved here and is still blocking two of the required deliverables; (2) run the screenshot-
+  compare loop *continuously*, one section at a time as it's built, rather than as a separate later
+  pass — several of the bugs above (padding, `:empty` collisions) were introduced early and sat
+  undetected across many sections until a dedicated visual pass finally caught them; (3) whenever a
+  bug is found in one placeholder/fallback code path, immediately grep for the same pattern in every
+  other section's fallback path — the combos 3-vs-5 bug was a repeat of a class of bug already fixed
+  once elsewhere in the same file set, and treating it as a one-off rather than a pattern is exactly
+  how it survived; (4) keep `theme check` in the loop throughout, not just at the start — it's free
+  and catches a different, complementary class of error (structural/schema) than screenshots do
+  (visual/computed-style).
