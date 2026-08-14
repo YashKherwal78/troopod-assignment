@@ -156,7 +156,7 @@ actually get resolved — see "AI workflow notes" for what that took and what it
   error against the live store).
 
 ## AI workflow notes
-- Worked in Claude Code directly in an editor session against a real repo and a real (if
+- Worked with an AI coding agent directly in an editor session against a real repo and a real (if
   password-protected) dev store — not a one-shot generation. Every section was written, pushed,
   and checked before moving to the next, then re-verified in a second, much longer pass described
   below.
