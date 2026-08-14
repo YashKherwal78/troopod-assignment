@@ -35,15 +35,25 @@
           <article class="pl-glass pl-tier{% if settings.highlight %} pl-tier--best{% endif %} pl-rv{% cycle '', ' pl-rv-d2', ' pl-rv-d3' %}" {{ block.shopify_attributes }}>
             {%- if settings.tag != blank -%}<span class="pl-tier__tag">{{ settings.tag }}</span>{%- endif -%}
 
-            {%- if sample_products.size > 0 -%}
-              <div class="pl-tierpix" data-qty="{{ qty }}" aria-hidden="true">
+            <div class="pl-tierpix" data-qty="{{ qty }}" aria-hidden="true">
+              {%- if sample_products.size > 0 -%}
                 {%- for product in sample_products -%}
                   {%- if product.featured_image != blank -%}
                     <img src="{{ product.featured_image | image_url: width: 120 }}" alt="" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="lazy">
+                  {%- else -%}
+                    <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="120" height="332" loading="lazy">
                   {%- endif -%}
                 {%- endfor -%}
-              </div>
-            {%- endif -%}
+              {%- else -%}
+                {%- comment -%} No sample products picked yet -- show `qty` (capped at 5, matching
+                  the tierpix layout's row limit) generic placeholder bottles so the tier card
+                  isn't missing its thumbnail row before real products are assigned. {%- endcomment -%}
+                {%- assign placeholder_qty = qty | at_most: 5 -%}
+                {%- for i in (1..placeholder_qty) -%}
+                  <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="120" height="332" loading="lazy">
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
 
             <div class="pl-tier__qty">{{ qty }}<small>Products</small></div>
             <div class="pl-tier__price">

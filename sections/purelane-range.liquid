@@ -39,13 +39,19 @@
               {%- endif -%}
             {%- endfor -%}
           {%- else -%}
-            <div class="pl-range__empty">
-              Add products or select a collection in the theme editor to populate the full range shelf.
-            </div>
+            {%- comment -%} No collection/products picked yet -- show placeholder bottles instead
+              of an empty shelf. {%- endcomment -%}
+            {%- for i in (1..8) -%}
+              <img class="pl-range__item pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="120" height="332" loading="lazy">
+            {%- endfor -%}
           {%- endif -%}
         </div>
       </div>
-      <p class="pl-range__hint">{{ section.settings.hint_text | default: 'Swipe to see the full shelf' }}</p>
+      {%- if products.size > 0 -%}
+        <p class="pl-range__hint">{{ section.settings.hint_text | default: 'Swipe to see the full shelf' }}</p>
+      {%- else -%}
+        <p class="pl-range__hint">Add products or select a collection above to replace this preview.</p>
+      {%- endif -%}
     </div>
   </div>
 </section>

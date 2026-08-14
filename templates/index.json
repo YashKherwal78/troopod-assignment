@@ -10,9 +10,9 @@
         "promise-1": { "type": "promise", "settings": { "icon": "leaf", "label": "Plant\npowered" } },
         "promise-2": { "type": "promise", "settings": { "icon": "shield", "label": "Safe for\nkids & pets" } },
         "promise-3": { "type": "promise", "settings": { "icon": "no-chem", "label": "Zero harsh\nchemicals" } },
-        "stage-1": { "type": "stage", "settings": { "label": "Single bottle" } },
-        "stage-2": { "type": "stage", "settings": { "label": "Any 2 products" } },
-        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products" } }
+        "stage-1": { "type": "stage", "settings": { "label": "Single bottle", "placeholder_count": 1, "price": 200 } },
+        "stage-2": { "type": "stage", "settings": { "label": "Any 2 products", "placeholder_count": 2, "price": 349 } },
+        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products", "placeholder_count": 3, "price": 499 } }
       },
       "block_order": ["promise-1", "promise-2", "promise-3", "stage-1", "stage-2", "stage-3"],
       "settings": {
@@ -83,12 +83,15 @@
     "purelane_proof": {
       "type": "purelane-proof",
       "blocks": {
+        "rot-1": { "type": "rotator_item", "settings": { "name": "Kitchen cleaner", "note": "Foam lifts grease, no scrubbing" } },
+        "rot-2": { "type": "rotator_item", "settings": { "name": "Tap & limescale", "note": "Melts hard water stains" } },
+        "rot-3": { "type": "rotator_item", "settings": { "name": "Laundry detergent", "note": "Tough on odour, soft on fabric" } },
         "stat-1": { "type": "stat", "settings": { "value": "99.9%", "label": "Germ kill", "description": "Tested against germs and bacteria" } },
         "stat-2": { "type": "stat", "settings": { "value": "0%", "label": "Sulphates", "description": "No SLS, chlorine or parabens" } },
         "stat-3": { "type": "stat", "settings": { "value": "100%", "label": "Plant based", "description": "Cleansers derived from plants" } },
         "stat-4": { "type": "stat", "settings": { "value": "4.8", "label": "Rated", "description": "Across 8,000+ verified reviews" } }
       },
-      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4"],
+      "block_order": ["rot-1", "rot-2", "rot-3", "stat-1", "stat-2", "stat-3", "stat-4"],
       "settings": {
         "heading": "Tough on grime.\nGentle on everything else.",
         "cta_link": "#Ingredients-purelane_ingredients"
@@ -101,9 +104,9 @@
     "purelane_bundles": {
       "type": "purelane-bundles",
       "blocks": {
-        "tier-1": { "type": "tier", "settings": { "tag": "Starter", "qty": 2, "features": "Pick any two products\nFree shipping across India" } },
-        "tier-2": { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "highlight": true, "features": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India" } },
-        "tier-3": { "type": "tier", "settings": { "tag": "Whole home", "qty": 5, "features": "Pick any five products\nEvery room in one order\nFree shipping across India" } }
+        "tier-1": { "type": "tier", "settings": { "tag": "Starter", "qty": 2, "price": 349, "features": "Pick any two products\nFree shipping across India" } },
+        "tier-2": { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "price": 499, "highlight": true, "features": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India" } },
+        "tier-3": { "type": "tier", "settings": { "tag": "Whole home", "qty": 5, "price": 799, "features": "Pick any five products\nEvery room in one order\nFree shipping across India" } }
       },
       "block_order": ["tier-1", "tier-2", "tier-3"],
       "settings": {}

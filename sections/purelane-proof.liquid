@@ -31,6 +31,10 @@
           <div class="pl-glass-2 pl-rot" id="Rot-{{ section.id }}" aria-hidden="true">
             <div class="pl-rot__frame">
               {%- for block in rotator_blocks -%}
+                {%- liquid
+                  assign rot_name = block.settings.name | default: block.settings.product.title | default: 'Add a product'
+                  assign rot_note = block.settings.note | default: 'Pick a product above to caption this slide'
+                -%}
                 {%- if block.settings.product.featured_image != blank -%}
                   <img
                     class="pl-rot__img{% if forloop.first %} pl-rot__img--on{% endif %}"
@@ -39,15 +43,26 @@
                     width="{{ block.settings.product.featured_image.width }}"
                     height="{{ block.settings.product.featured_image.height }}"
                     loading="lazy"
-                    data-name="{{ block.settings.name | default: block.settings.product.title | escape }}"
-                    data-note="{{ block.settings.note | escape }}"
+                    data-name="{{ rot_name | escape }}"
+                    data-note="{{ rot_note | escape }}"
+                  >
+                {%- else -%}
+                  {%- comment -%} No product/image picked for this rotator slot yet -- show the
+                    generic placeholder bottle instead of skipping it entirely, same pattern used
+                    in the Hero carousel. {%- endcomment -%}
+                  <img
+                    class="pl-rot__img pl-hp--placeholder{% if forloop.first %} pl-rot__img--on{% endif %}"
+                    src="{{ 'placeholder-bottle.svg' | asset_url }}"
+                    alt="" width="130" height="360" loading="lazy"
+                    data-name="{{ rot_name | escape }}"
+                    data-note="{{ rot_note | escape }}"
                   >
                 {%- endif -%}
               {%- endfor -%}
             </div>
             <div class="pl-rot__cap">
-              <b>{{ rotator_blocks.first.settings.name | default: rotator_blocks.first.settings.product.title }}</b>
-              <span>{{ rotator_blocks.first.settings.note }}</span>
+              <b>{{ rotator_blocks.first.settings.name | default: rotator_blocks.first.settings.product.title | default: 'Add a product' }}</b>
+              <span>{{ rotator_blocks.first.settings.note | default: 'Pick a product above to caption this slide' }}</span>
             </div>
             {%- if rotator_blocks.size > 1 -%}
               <div class="pl-rot__dots">
@@ -93,7 +108,7 @@
       "name": "Rotator product",
       "settings": [
         { "type": "product", "id": "product", "label": "Product" },
-        { "type": "text", "id": "name", "label": "Name override" },
+        { "type": "text", "id": "name", "label": "Name override", "info": "Falls back to the product's title once one is picked above." },
         { "type": "text", "id": "note", "label": "Caption" }
       ]
     },

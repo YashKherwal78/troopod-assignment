@@ -27,8 +27,17 @@
         {%- endfor -%}
       </div>
     {%- else -%}
-      <p class="pl-body-s" style="text-align:center">
-        {{ 'sections.collection_template.empty' | t | default: 'Select a collection to display products here.' }}
+      {%- comment -%} No collection selected / collection is empty -- show onboarding-style
+        placeholder cards instead of just a text instruction. {%- endcomment -%}
+      <div class="pl-shelf" aria-hidden="true">
+        {%- for i in (1..4) -%}
+          <div class="pl-rv{% cycle '', ' pl-rv-d1', ' pl-rv-d2', ' pl-rv-d3' %}">
+            {%- render 'card-purelane-product' -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <p class="pl-body-s" style="text-align:center;margin-top:14px">
+        {{ 'sections.collection_template.empty' | t | default: 'Select a collection above to replace this preview.' }}
       </p>
     {%- endif -%}
   </div>

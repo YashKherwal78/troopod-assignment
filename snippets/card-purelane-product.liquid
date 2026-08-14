@@ -4,7 +4,10 @@
   cards. Build accordingly.").
 
   Accepts:
-  - card_product: {Object} Product Liquid object (required)
+  - card_product: {Object} Product Liquid object. If blank, renders an
+    onboarding-style placeholder card (bottle art + generic title/price)
+    instead of nothing -- same convention Dawn's own card-product.liquid
+    uses for empty collections.
   - badge_text: {String} Optional override for the top-left pill
     (falls back to card_product.metafields.custom.badge, then Sale/Sold out)
   - lazy_load: {Boolean} Default true
@@ -16,79 +19,90 @@
     review-app convention — namespace "reviews", key "rating")
   - card_product.metafields.reviews.rating_count
 {% endcomment %}
-{%- liquid
-  assign badge = badge_text
-  if badge == blank and card_product.metafields.custom.badge != blank
-    assign badge = card_product.metafields.custom.badge
-  endif
-  assign rating = card_product.metafields.reviews.rating.value
-  assign rating_count = card_product.metafields.reviews.rating_count.value
--%}
-<article class="pl-glass pl-card{% if card_product.available == false %} pl-card--sold-out{% endif %}">
-  <div class="pl-card__shot">
-    {%- if badge != blank -%}
-      <span class="pl-card__pill">{{ badge }}</span>
-    {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
-      <span class="pl-card__pill">{{ 'products.product.on_sale' | t }}</span>
-    {%- endif -%}
+{%- if card_product == blank -%}
+  <article class="pl-glass pl-card">
+    <div class="pl-card__shot">
+      <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
+    </div>
+    <h3 class="pl-card__title">{{ 'onboarding.product_title' | t }}</h3>
+    <div class="pl-card__pr"><strong>{{ 1999 | money }}</strong></div>
+    <button type="button" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" disabled aria-disabled="true" tabindex="-1">
+      {{ 'products.product.add_to_cart' | t }}
+    </button>
+  </article>
+{%- else -%}
+  {%- liquid
+    assign badge = badge_text
+    if badge == blank and card_product.metafields.custom.badge != blank
+      assign badge = card_product.metafields.custom.badge
+    endif
+    assign rating = card_product.metafields.reviews.rating.value
+    assign rating_count = card_product.metafields.reviews.rating_count.value
+  -%}
+  <article class="pl-glass pl-card{% if card_product.available == false %} pl-card--sold-out{% endif %}">
+    <div class="pl-card__shot">
+      {%- if badge != blank -%}
+        <span class="pl-card__pill">{{ badge }}</span>
+      {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+        <span class="pl-card__pill">{{ 'products.product.on_sale' | t }}</span>
+      {%- endif -%}
 
-    {%- if card_product.featured_image != blank -%}
-      <img
-        srcset="
-          {%- if card_product.featured_image.width >= 200 -%}{{ card_product.featured_image | image_url: width: 200 }} 200w,{%- endif -%}
-          {%- if card_product.featured_image.width >= 400 -%}{{ card_product.featured_image | image_url: width: 400 }} 400w,{%- endif -%}
-          {{ card_product.featured_image | image_url: width: 600 }} 600w
-        "
-        src="{{ card_product.featured_image | image_url: width: 400 }}"
-        sizes="(min-width: 860px) 25vw, 50vw"
-        alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
-        width="{{ card_product.featured_image.width }}"
-        height="{{ card_product.featured_image.height }}"
-        {% unless lazy_load == false %}loading="lazy"{% endunless %}
-      >
-    {%- else -%}
-      <span class="pl-card__noimg" aria-hidden="true">
-        {{- 'icon-image.svg' | inline_asset_content -}}
-      </span>
-    {%- endif -%}
-  </div>
-
-  <h3 class="pl-card__title">
-    <a href="{{ card_product.url }}" class="pl-card__link">{{ card_product.title | escape }}</a>
-  </h3>
-
-  {%- if rating != blank -%}
-    <div class="pl-card__rate">
-      <b aria-hidden="true">&#9733; {{ rating }}</b>
-      <span class="pl-visually-hidden">{{ rating }} out of 5 stars</span>
-      {%- if rating_count -%}
-        &middot; {{ rating_count }} reviews
+      {%- if card_product.featured_image != blank -%}
+        <img
+          srcset="
+            {%- if card_product.featured_image.width >= 200 -%}{{ card_product.featured_image | image_url: width: 200 }} 200w,{%- endif -%}
+            {%- if card_product.featured_image.width >= 400 -%}{{ card_product.featured_image | image_url: width: 400 }} 400w,{%- endif -%}
+            {{ card_product.featured_image | image_url: width: 600 }} 600w
+          "
+          src="{{ card_product.featured_image | image_url: width: 400 }}"
+          sizes="(min-width: 860px) 25vw, 50vw"
+          alt="{{ card_product.featured_image.alt | default: card_product.title | escape }}"
+          width="{{ card_product.featured_image.width }}"
+          height="{{ card_product.featured_image.height }}"
+          {% unless lazy_load == false %}loading="lazy"{% endunless %}
+        >
+      {%- else -%}
+        <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
       {%- endif -%}
     </div>
-  {%- endif -%}
 
-  <div class="pl-card__pr">
-    {%- if card_product.price_varies -%}
-      <strong>{{ 'products.product.price.from_price_html' | t: price: card_product.price_min | money }}</strong>
+    <h3 class="pl-card__title">
+      <a href="{{ card_product.url }}" class="pl-card__link">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {%- if rating != blank -%}
+      <div class="pl-card__rate">
+        <b aria-hidden="true">&#9733; {{ rating }}</b>
+        <span class="pl-visually-hidden">{{ rating }} out of 5 stars</span>
+        {%- if rating_count -%}
+          &middot; {{ rating_count }} reviews
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pl-card__pr">
+      {%- if card_product.price_varies -%}
+        <strong>{{ 'products.product.price.from_price_html' | t: price: card_product.price_min | money }}</strong>
+      {%- else -%}
+        <strong>{{ card_product.price | money }}</strong>
+      {%- endif -%}
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <s>{{ card_product.compare_at_price | money }}</s>
+        <em>{{ card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round }}% off</em>
+      {%- endif -%}
+    </div>
+
+    {%- if card_product.available -%}
+      {%- form 'product', card_product, class: 'pl-card__form' -%}
+        <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+        <button type="submit" name="add" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" aria-label="{{ 'products.product.add_to_cart' | t }} — {{ card_product.title | escape }}">
+          {{ 'products.product.add_to_cart' | t }}
+        </button>
+      {%- endform -%}
     {%- else -%}
-      <strong>{{ card_product.price | money }}</strong>
-    {%- endif -%}
-    {%- if card_product.compare_at_price > card_product.price -%}
-      <s>{{ card_product.compare_at_price | money }}</s>
-      <em>{{ card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round }}% off</em>
-    {%- endif -%}
-  </div>
-
-  {%- if card_product.available -%}
-    {%- form 'product', card_product, class: 'pl-card__form' -%}
-      <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-      <button type="submit" name="add" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" aria-label="{{ 'products.product.add_to_cart' | t }} — {{ card_product.title | escape }}">
-        {{ 'products.product.add_to_cart' | t }}
+      <button type="button" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" disabled aria-disabled="true" aria-label="{{ 'products.product.sold_out' | t }} — {{ card_product.title | escape }}">
+        {{ 'products.product.sold_out' | t }}
       </button>
-    {%- endform -%}
-  {%- else -%}
-    <button type="button" class="pl-btn pl-btn-ghost pl-btn-sm pl-btn-full" disabled aria-disabled="true" aria-label="{{ 'products.product.sold_out' | t }} — {{ card_product.title | escape }}">
-      {{ 'products.product.sold_out' | t }}
-    </button>
-  {%- endif -%}
-</article>
+    {%- endif -%}
+  </article>
+{%- endif -%}

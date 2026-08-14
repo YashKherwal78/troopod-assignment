@@ -38,6 +38,8 @@
                   height="{{ img.height }}"
                   loading="lazy"
                 >
+              {%- else -%}
+                <img class="pl-cat__img pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
               {%- endif -%}
             </span>
             <span class="pl-cat__txt">

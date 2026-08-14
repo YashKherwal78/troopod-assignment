@@ -80,7 +80,35 @@
         {{ 'icon-arrow-right.svg' | inline_asset_content }}Swipe for more combos
       </div>
     {%- else -%}
-      <p class="pl-body-s" style="text-align:center">Add combo entries in Content &rsaquo; Metaobjects to display them here.</p>
+      {%- comment -%} No combo metaobject entries created yet -- show sample preview cards
+        (Dawn's own onboarding pattern for empty collections/products) instead of just a text
+        instruction, so the section isn't blank before a merchant adds real combos. {%- endcomment -%}
+      <div class="pl-comborail pl-rv" aria-hidden="true">
+        {%- for sample in (1..3) -%}
+          <article class="pl-glass pl-combo{% if sample == 1 %} pl-combo--hero{% endif %}">
+            <div class="pl-combo__tray">
+              <span class="pl-combo__save">Preview</span>
+              {%- if sample == 1 -%}<span class="pl-combo__flag">Most popular</span>{%- endif -%}
+              <div class="pl-combo__stack">
+                {%- for i in (1..3) -%}
+                  <span class="pl-combo__it">
+                    <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="160" height="443" loading="lazy">
+                  </span>
+                  {%- unless i == 3 -%}<span class="pl-combo__plus" aria-hidden="true">+</span>{%- endunless -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            <div class="pl-combo__body">
+              <h3>Sample combo {{ sample }}</h3>
+              <div class="pl-combo__cnt">3 products</div>
+              <p class="pl-combo__inc">Add a real combo in Content &rsaquo; Metaobjects to replace this preview.</p>
+              <div class="pl-combo__prow"><strong>{{ 0 | money }}</strong></div>
+              <a class="pl-btn pl-btn-ghost pl-btn-full" href="#" tabindex="-1">Shop bundle</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+      <p class="pl-body-s" style="text-align:center;margin-top:10px">Add combo entries in Content &rsaquo; Metaobjects to replace this preview.</p>
     {%- endif -%}
   </div>
 </section>
