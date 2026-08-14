@@ -30,7 +30,7 @@
       {%- comment -%} No collection selected / collection is empty -- show onboarding-style
         placeholder cards instead of just a text instruction. {%- endcomment -%}
       <div class="pl-shelf" aria-hidden="true">
-        {%- for i in (1..4) -%}
+        {%- for i in (1..limit) -%}
           <div class="pl-rv{% cycle '', ' pl-rv-d1', ' pl-rv-d2', ' pl-rv-d3' %}">
             {%- render 'card-purelane-product' -%}
           </div>
