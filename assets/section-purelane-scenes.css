@@ -40,8 +40,17 @@
   display: none; flex-direction: column; gap: 12px;
 }
 @media (min-width: 1180px) { .pl-rail { display: flex; } }
-.pl-rail a {
-  width: 8px; height: 8px; border-radius: 50%; background: rgba(75, 58, 143, .24);
+/* nav.pl-rail a (not .pl-rail a): the rail's dots are built by JS as
+   genuinely empty <a> tags (no text/children) -- Dawn's own base.css ships
+   a:empty{display:none} (same "hide accidentally-empty elements"
+   convention that broke the background scenes earlier), and that rule's
+   specificity (element+pseudo-class) ties with a bare ".pl-rail a" rule,
+   so it can silently win depending on stylesheet load order. Adding the
+   "nav" element to the selector raises specificity past a:empty
+   regardless of order. Confirmed via computed style: display was
+   resolving to "none" despite width/height being set correctly. */
+nav.pl-rail a {
+  display: block; width: 8px; height: 8px; border-radius: 50%; background: rgba(75, 58, 143, .24);
   transition: .3s cubic-bezier(.2, .7, .2, 1); position: relative;
 }
-.pl-rail a.pl-rail__on { background: #b8701c; box-shadow: 0 0 0 5px rgba(201, 118, 29, .16); height: 22px; border-radius: 999px; }
+nav.pl-rail a.pl-rail__on { background: #b8701c; box-shadow: 0 0 0 5px rgba(201, 118, 29, .16); height: 22px; border-radius: 999px; }
