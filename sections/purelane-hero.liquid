@@ -111,12 +111,18 @@
                 {%- endfor -%}
               {%- else -%}
                 {%- comment -%} Merchant hasn't picked products for this bundle size yet -- show
-                  `placeholder_count` generic bottles (matching this stage's intended "single/
-                  double/triple" size) instead of empty space, same graceful-empty-state pattern
-                  as the product card's no-image icon. Replaced automatically the moment real
-                  products are picked. {%- endcomment -%}
+                  `placeholder_count` bottles instead of empty space, same graceful-empty-state
+                  pattern as the product card's no-image icon (replaced automatically the moment
+                  real products are picked). Uses the prototype's own exact tall-bottle art
+                  (kbtl/tbtl/mbtl) in the same 1/2/3-product arrangement as the reference, rather
+                  than one repeated generic shape. {%- endcomment -%}
+                {%- case placeholder_count -%}
+                  {%- when 2 -%}{%- assign bottle_arts = 'tbtl,kbtl' | split: ',' -%}
+                  {%- when 3 -%}{%- assign bottle_arts = 'tbtl,mbtl,kbtl' | split: ',' -%}
+                  {%- else -%}{%- assign bottle_arts = 'kbtl' | split: ',' -%}
+                {%- endcase -%}
                 {%- for i in (1..placeholder_count) -%}
-                  <img class="pl-hp pl-hp--d{{ forloop.index }} pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
+                  <img class="pl-hp pl-hp--d{{ forloop.index }} pl-hp--placeholder" src="{{ 'product-art-' | append: bottle_arts[forloop.index0] | append: '.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
                 {%- endfor -%}
               {%- endif -%}
               {%- if display_count > 0 -%}

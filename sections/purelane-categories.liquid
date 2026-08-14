@@ -39,7 +39,9 @@
                   loading="lazy"
                 >
               {%- else -%}
-                <img class="pl-cat__img pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
+                {%- comment -%} No collection/custom image set yet -- use the matching item from
+                  the prototype's own product-shape lineup instead of a generic bottle. {%- endcomment -%}
+                <img class="pl-cat__img pl-hp--placeholder" src="{{ 'product-art-' | append: block.settings.placeholder_art | append: '.svg' | asset_url }}" alt="" width="130" height="360" loading="lazy">
               {%- endif -%}
             </span>
             <span class="pl-cat__txt">
@@ -107,6 +109,24 @@
           "type": "url",
           "id": "link",
           "label": "Link override"
+        },
+        {
+          "type": "select",
+          "id": "placeholder_art",
+          "label": "Preview art (until a collection/image is set)",
+          "options": [
+            { "value": "kitchen", "label": "Kitchen" },
+            { "value": "toilet", "label": "Bathroom" },
+            { "value": "laundry", "label": "Laundry" },
+            { "value": "tap", "label": "Hard water / tap" },
+            { "value": "dish", "label": "Dishwash" },
+            { "value": "handwash", "label": "Handwash" },
+            { "value": "metal", "label": "Metal cleaner" },
+            { "value": "wm", "label": "Washing machine" },
+            { "value": "floor", "label": "Floor" },
+            { "value": "eraser", "label": "Eraser" }
+          ],
+          "default": "kitchen"
         }
       ]
     }
@@ -115,10 +135,10 @@
     {
       "name": "Bundle categories",
       "blocks": [
-        { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more" } },
-        { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect" } },
-        { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash" } },
-        { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale" } }
+        { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more", "placeholder_art": "kitchen" } },
+        { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect", "placeholder_art": "toilet" } },
+        { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash", "placeholder_art": "laundry" } },
+        { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale", "placeholder_art": "tap" } }
       ]
     }
   ]

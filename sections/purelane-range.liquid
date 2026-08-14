@@ -39,10 +39,13 @@
               {%- endif -%}
             {%- endfor -%}
           {%- else -%}
-            {%- comment -%} No collection/products picked yet -- show placeholder bottles instead
-              of an empty shelf. {%- endcomment -%}
-            {%- for i in (1..8) -%}
-              <img class="pl-range__item pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="120" height="332" loading="lazy">
+            {%- comment -%} No collection/products picked yet -- show the prototype's own varied
+              product-shape lineup (extracted from reference/purelane-homepage.html as real SVG
+              assets) instead of one repeated generic bottle, matching the reference shelf's actual
+              mix of shapes exactly (including the eraser's distinct block silhouette). {%- endcomment -%}
+            {%- assign range_preview = 'floor,tap,kitchen,toilet,laundry,dish,metal,wm,handwash,eraser' | split: ',' -%}
+            {%- for item in range_preview -%}
+              <img class="pl-range__item pl-hp--placeholder" src="{{ 'product-art-' | append: item | append: '.svg' | asset_url }}" alt="" width="120" height="332" loading="lazy">
             {%- endfor -%}
           {%- endif -%}
         </div>

@@ -137,10 +137,10 @@
     "purelane_categories": {
       "type": "purelane-categories",
       "blocks": {
-        "cat-1": { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more" } },
-        "cat-2": { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect" } },
-        "cat-3": { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash" } },
-        "cat-4": { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale" } }
+        "cat-1": { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more", "placeholder_art": "kitchen" } },
+        "cat-2": { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect", "placeholder_art": "toilet" } },
+        "cat-3": { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash", "placeholder_art": "laundry" } },
+        "cat-4": { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale", "placeholder_art": "tap" } }
       },
       "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
       "settings": {}
