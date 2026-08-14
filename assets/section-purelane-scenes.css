@@ -8,16 +8,24 @@
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
   background: #eee7fb;
 }
-.pl-scene {
-  position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease;
+/* Dawn's own base.css ships `div:empty{display:none}` (hides accidentally-
+   empty rich-text blocks). Its specificity (element+pseudo-class) beats a
+   bare `.pl-scene` class rule, and these divs are *intentionally* empty
+   (pure CSS gradient boxes) -- so Dawn's rule was silently hiding all 5 of
+   them, collapsing them to 0x0 and leaving only .pl-scenes' own base color
+   visible. Fixed by scoping to `.pl-scenes .pl-scene`/`.pl-scenes
+   .pl-scene-vignette` (2 classes) and declaring `display: block` explicitly
+   -- both raise specificity past `div:empty`'s regardless of load order. */
+.pl-scenes .pl-scene {
+  display: block; position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease;
 }
-.pl-scene.pl-scene--on { opacity: 1; }
+.pl-scenes .pl-scene.pl-scene--on { opacity: 1; }
 .pl-scene--s1 { background: linear-gradient(178deg, #fbfffb 0%, #eafaec 24%, #d6f1dc 54%, #bfe8ca 100%); }
 .pl-scene--s2 { background: linear-gradient(178deg, #f6fdf7 0%, #e3f7e7 26%, #cbedd4 58%, #b2e2c2 100%); }
 .pl-scene--s3 { background: linear-gradient(178deg, #f0fbf2 0%, #d9f2df 28%, #bde6c8 60%, #a2d9b6 100%); }
 .pl-scene--s4 { background: linear-gradient(178deg, #e9f8ec 0%, #cdedd6 30%, #addcbe 62%, #8ecdaa 100%); }
-.pl-scene-vignette {
-  position: absolute; inset: 0;
+.pl-scenes .pl-scene-vignette {
+  display: block; position: absolute; inset: 0;
   background:
     radial-gradient(126% 88% at 50% 26%, transparent 42%, rgba(75, 58, 143, .07) 80%, rgba(0, 80, 74, .16) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, .40) 0%, transparent 20%, transparent 70%, rgba(0, 84, 78, .10) 100%);
