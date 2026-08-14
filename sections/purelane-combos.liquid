@@ -80,33 +80,54 @@
         {{ 'icon-arrow-right.svg' | inline_asset_content }}Swipe for more combos
       </div>
     {%- else -%}
-      {%- comment -%} No combo metaobject entries created yet -- show sample preview cards
+      {%- comment -%} No combo metaobject entries created yet -- show 5 sample preview cards
         (Dawn's own onboarding pattern for empty collections/products) instead of just a text
-        instruction, so the section isn't blank before a merchant adds real combos. {%- endcomment -%}
+        instruction, so the section isn't blank before a merchant adds real combos, and the
+        horizontally-scrollable rail is demonstrable with a realistic number of cards. Sample
+        copy/pricing mirrors the reference file's own 5 combos exactly. {%- endcomment -%}
+      {%- liquid
+        assign sample_titles = 'Kitchen essentials|Laundry care bundle|Complete home bundle|Bathroom deep clean|Hard water solution kit' | split: '|'
+        assign sample_tags = 'Most popular||Best value||' | split: '|'
+        assign sample_counts = '3|3|5|3|2' | split: '|'
+        assign sample_prices = '499|499|799|499|349' | split: '|'
+        assign sample_compares = '897|947|1495|897|598' | split: '|'
+        assign sample_saves = '398|448|696|398|249' | split: '|'
+        assign sample_arts = 'kitchen,dish,tap|laundry,handwash,wm|kitchen,floor,handwash|toilet,tap,eraser|tap,toilet' | split: '|'
+      -%}
       <div class="pl-comborail pl-rv" aria-hidden="true">
-        {%- for sample in (1..3) -%}
-          <article class="pl-glass pl-combo{% if sample == 1 %} pl-combo--hero{% endif %}">
+        {%- for title in sample_titles -%}
+          {%- assign i = forloop.index0 -%}
+          {%- assign tag = sample_tags[i] -%}
+          {%- assign arts = sample_arts[i] | split: ',' -%}
+          <article class="pl-glass pl-combo{% if tag != blank %} pl-combo--hero{% endif %}">
             <div class="pl-combo__tray">
-              <span class="pl-combo__save">Preview</span>
-              {%- if sample == 1 -%}<span class="pl-combo__flag">Most popular</span>{%- endif -%}
+              <span class="pl-combo__save">Preview &middot; save &#8377;{{ sample_saves[i] }}</span>
+              {%- if tag != blank -%}<span class="pl-combo__flag">{{ tag }}</span>{%- endif -%}
               <div class="pl-combo__stack">
-                {%- for i in (1..3) -%}
+                {%- for art in arts -%}
                   <span class="pl-combo__it">
-                    <img class="pl-hp--placeholder" src="{{ 'placeholder-bottle.svg' | asset_url }}" alt="" width="160" height="443" loading="lazy">
+                    <img class="pl-hp--placeholder" src="{{ 'product-art-' | append: art | append: '.svg' | asset_url }}" alt="" width="160" height="443" loading="lazy">
                   </span>
-                  {%- unless i == 3 -%}<span class="pl-combo__plus" aria-hidden="true">+</span>{%- endunless -%}
+                  {%- unless forloop.last -%}<span class="pl-combo__plus" aria-hidden="true">+</span>{%- endunless -%}
                 {%- endfor -%}
               </div>
             </div>
             <div class="pl-combo__body">
-              <h3>Sample combo {{ sample }}</h3>
-              <div class="pl-combo__cnt">3 products</div>
+              <h3>{{ title }}</h3>
+              <div class="pl-combo__cnt">{{ sample_counts[i] }} products</div>
               <p class="pl-combo__inc">Add a real combo in Content &rsaquo; Metaobjects to replace this preview.</p>
-              <div class="pl-combo__prow"><strong>{{ 0 | money }}</strong></div>
-              <a class="pl-btn pl-btn-ghost pl-btn-full" href="#" tabindex="-1">Shop bundle</a>
+              <div class="pl-combo__prow">
+                <strong>&#8377;{{ sample_prices[i] }}</strong>
+                <s>&#8377;{{ sample_compares[i] }}</s>
+                <em>Save &#8377;{{ sample_saves[i] }}</em>
+              </div>
+              <a class="pl-btn {% if tag == 'Best value' %}pl-btn-primary{% else %}pl-btn-ghost{% endif %} pl-btn-full" href="#" tabindex="-1">Shop bundle</a>
             </div>
           </article>
         {%- endfor -%}
+      </div>
+      <div class="pl-combos__swipecue" aria-hidden="true">
+        {{ 'icon-arrow-right.svg' | inline_asset_content }}Swipe for more combos
       </div>
       <p class="pl-body-s" style="text-align:center;margin-top:10px">Add combo entries in Content &rsaquo; Metaobjects to replace this preview.</p>
     {%- endif -%}
