@@ -73,7 +73,16 @@
    This was built the other way around (always relative/full-width),
    which pushed the product stage into its own row below the heading at
    every width, requiring a scroll to see it on desktop. */
-.purelane .pl-hero__prod { position: relative; z-index: 2; width: min(88vw, 420px); margin: 20px auto 0; }
+/* The reference casts this large, dark, soft shadow on .hero-prod itself
+   (separate from each bottle's own smaller drop-shadow below) -- it's what
+   makes the background read visibly darker directly behind the product
+   group. Missing here, the same spot just showed the flat scene gradient,
+   which is the "lighter at the edges, no darkening behind the bottle"
+   difference. */
+.purelane .pl-hero__prod {
+  position: relative; z-index: 2; width: min(88vw, 420px); margin: 20px auto 0;
+  filter: drop-shadow(0 34px 54px rgba(2, 20, 19, .6));
+}
 @media (min-width: 901px) {
   .purelane .pl-hero__prod { position: absolute; right: 2%; bottom: 0; width: min(50vw, 560px); margin: 0; }
 }

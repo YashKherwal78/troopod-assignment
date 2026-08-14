@@ -32,6 +32,7 @@
 
     var current = 0;
     function setScene(n) {
+      if (stage) stage.setAttribute('data-d', String(n));
       if (n === current || !scenes.length) { current = n; return; }
       current = n;
       scenes.forEach(function (s, i) { s.classList.toggle('pl-scene--on', i === n - 1); });
@@ -41,22 +42,45 @@
       return Math.min(SCENE_COUNT, 1 + Math.floor((i * SCENE_COUNT) / zones.length));
     }
 
+    // water layers drift with scroll depth + (desktop) mouse position, each
+    // at its own factor -- same values/order (a,b,c,s) as the reference.
+    var waterLayers = stage ? [].slice.call(stage.querySelectorAll('.pl-wl')) : [];
+    var waterDepths = [0.05, 0.09, 0.03, 0.02];
+    var mx = 0, my = 0;
+
     var raf = null;
     function frame() {
       raf = null;
-      var focus = window.scrollY + window.innerHeight * 0.42;
+      var y = window.scrollY || window.pageYOffset;
+      var focus = y + window.innerHeight * 0.42;
       var idx = 0;
       zones.forEach(function (z, i) {
-        if (z.getBoundingClientRect().top + window.scrollY <= focus) idx = i;
+        if (z.getBoundingClientRect().top + y <= focus) idx = i;
       });
       setScene(sceneForZoneIndex(idx));
       railLinks.forEach(function (a, i) { a.classList.toggle('pl-rail__on', i === idx); });
+
+      if (!reduce) {
+        waterLayers.forEach(function (wl, i) {
+          var d = waterDepths[i] || 0.05;
+          wl.style.setProperty('--pl-wl-px', (mx * d * 130).toFixed(1) + 'px');
+          wl.style.setProperty('--pl-wl-py', (-y * d + my * d * 90).toFixed(1) + 'px');
+        });
+      }
     }
     function onScroll() { if (!raf) raf = requestAnimationFrame(frame); }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     frame();
+
+    if (!reduce && window.matchMedia('(min-width: 1024px)').matches) {
+      window.addEventListener('mousemove', function (e) {
+        mx = (e.clientX / window.innerWidth - 0.5) * 2;
+        my = (e.clientY / window.innerHeight - 0.5) * 2;
+        onScroll();
+      }, { passive: true });
+    }
 
     if (!reduce) {
       // keep in sync as blocks/sections animate in and shift layout

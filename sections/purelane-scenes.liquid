@@ -13,11 +13,14 @@
   sections in the theme editor never desyncs a hardcoded scene number.
 {% endcomment %}
 
-<div class="pl-scenes" id="PlScenes" aria-hidden="true">
+<div class="pl-scenes" id="PlScenes" data-d="1" aria-hidden="true">
   <div class="pl-scene pl-scene--s1 pl-scene--on"></div>
   <div class="pl-scene pl-scene--s2"></div>
   <div class="pl-scene pl-scene--s3"></div>
   <div class="pl-scene pl-scene--s4"></div>
+
+  {% render 'purelane-water' %}
+
   <div class="pl-scene-vignette"></div>
 </div>
 

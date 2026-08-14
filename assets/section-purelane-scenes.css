@@ -30,8 +30,69 @@
     radial-gradient(126% 88% at 50% 26%, transparent 42%, rgba(75, 58, 143, .07) 80%, rgba(0, 80, 74, .16) 100%),
     linear-gradient(180deg, rgba(255, 255, 255, .40) 0%, transparent 20%, transparent 70%, rgba(0, 84, 78, .10) 100%);
 }
+
+/* ---------- water cinematics (ported from the reference's .water/.wl-*) ----------
+   Values below are the reference's own V2/light-theme numbers (mix-blend-mode,
+   opacity, keyframes) -- its V1/dark-theme block never renders (later rule wins
+   the cascade), same as every other color token in this file. */
+.pl-water { position: absolute; inset: -14% -10%; pointer-events: none; transition: opacity 1.2s ease; }
+.pl-wl { position: absolute; inset: 0; will-change: transform; translate: var(--pl-wl-px, 0) var(--pl-wl-py, 0); }
+.pl-wl .pl-sv { width: 100%; height: 100%; }
+.pl-wl-a { mix-blend-mode: soft-light; opacity: 1; animation: pl-drift-a 34s linear infinite; }
+.pl-wl-a .pl-sv { filter: contrast(1.25); }
+.pl-wl-b { mix-blend-mode: overlay; opacity: .66; animation: pl-drift-b 23s linear infinite; }
+.pl-wl-c { mix-blend-mode: overlay; opacity: .6; animation: pl-shaft-sway 19s ease-in-out infinite; }
+.pl-wl-s { mix-blend-mode: overlay; opacity: .72; animation: pl-surface 11s ease-in-out infinite; transform-origin: 50% 0; }
+@keyframes pl-drift-a {
+  0% { transform: translate3d(-3%, 0, 0) scale(1.06); }
+  50% { transform: translate3d(3%, -1.6%, 0) scale(1.13); }
+  100% { transform: translate3d(-3%, 0, 0) scale(1.06); }
+}
+@keyframes pl-drift-b {
+  0% { transform: translate3d(4%, 1%, 0) scale(1.1); }
+  50% { transform: translate3d(-4%, -1%, 0) scale(1.04); }
+  100% { transform: translate3d(4%, 1%, 0) scale(1.1); }
+}
+@keyframes pl-shaft-sway {
+  0% { transform: translate3d(-2%, 0, 0) skewX(0deg); opacity: .34; }
+  50% { transform: translate3d(2%, 0, 0) skewX(2.4deg); opacity: .6; }
+  100% { transform: translate3d(-2%, 0, 0) skewX(0deg); opacity: .34; }
+}
+@keyframes pl-surface {
+  0% { transform: translateY(0) scaleY(1); opacity: .55; }
+  50% { transform: translateY(-1.4%) scaleY(1.14); opacity: .82; }
+  100% { transform: translateY(0) scaleY(1); opacity: .55; }
+}
+/* depth response, keyed off [data-d] set by purelane-scenes.js in lockstep
+   with the active .pl-scene */
+.pl-scenes[data-d="1"] .pl-water { opacity: 1; }
+.pl-scenes[data-d="2"] .pl-water { opacity: .9; }
+.pl-scenes[data-d="3"] .pl-water { opacity: .76; }
+.pl-scenes[data-d="4"] .pl-water { opacity: .58; }
+.pl-scenes[data-d="1"] .pl-wl-s { opacity: .7; }
+.pl-scenes[data-d="2"] .pl-wl-s,
+.pl-scenes[data-d="3"] .pl-wl-s,
+.pl-scenes[data-d="4"] .pl-wl-s { opacity: 0; }
+
+.pl-bub { position: absolute; inset: 0; overflow: hidden; }
+.pl-bub span {
+  position: absolute; bottom: -6%; left: var(--x); width: var(--s); height: var(--s); border-radius: 50%;
+  border: 1px solid rgba(75, 58, 143, .26);
+  background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 64%);
+  animation: pl-rise var(--dur) linear infinite; animation-delay: var(--dly); opacity: 0;
+}
+@keyframes pl-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  12% { opacity: .7; }
+  88% { opacity: .5; }
+  100% { transform: translate3d(var(--drift), -116vh, 0); opacity: 0; }
+}
+@media (max-width: 900px) {
+  .pl-wl-b, .pl-bub { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .pl-scene { transition: none; }
+  .pl-wl-a, .pl-wl-b, .pl-wl-c, .pl-wl-s, .pl-bub span { animation: none; }
 }
 
 /* scroll progress rail */
