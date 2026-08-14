@@ -22,7 +22,14 @@
   display: none;
 }
 @media (min-width: 901px) {
-  .purelane .pl-hero__badges {
+  /* .pl-hero__badges.pl-glass-2 (not just .pl-hero__badges): purelane-base.css's
+     .pl-glass-2{position:relative} rule is equal specificity (2 classes) and,
+     because every section re-includes purelane-base.css, ends up repeated
+     later in document order than this one-time hero rule -- so it silently
+     won the cascade on `position` even though this rule loaded first. Adding
+     .pl-glass-2 to the selector raises specificity so this can't happen
+     regardless of section/file load order. Same fix applied to .pl-ptag below. */
+  .purelane .pl-hero__badges.pl-glass-2 {
     position: absolute; right: 0; top: 0; width: 96px; z-index: 3;
     display: flex; flex-direction: column; gap: 2px; padding: 12px 8px; border-radius: 20px;
   }
@@ -67,10 +74,13 @@
 .purelane .pl-hslide[data-count="3"] .pl-hp--d2 { height: 79%; margin-left: -8%; z-index: 2; order: 3; }
 .purelane .pl-hslide[data-count="3"] .pl-hp--d3 { height: 97%; z-index: 3; order: 2; }
 
-.purelane .pl-ptag {
+/* .pl-ptag.pl-glass-2: same specificity-vs-cascade-order fix as
+   .pl-hero__badges.pl-glass-2 above -- this element also carries pl-glass-2,
+   whose position:relative is equal-specificity and would otherwise win. */
+.purelane .pl-ptag.pl-glass-2 {
   position: absolute; left: 0; bottom: 2%; z-index: 6; padding: 9px 12px 10px; border-radius: 14px; max-width: 58%;
 }
-@media (min-width: 901px) { .purelane .pl-ptag { padding: 11px 14px 12px; border-radius: 16px; max-width: 52%; } }
+@media (min-width: 901px) { .purelane .pl-ptag.pl-glass-2 { padding: 11px 14px 12px; border-radius: 16px; max-width: 52%; } }
 .purelane .pl-ptag__lbl { display: block; font-size: 9px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; color: var(--pl-accent); }
 .purelane .pl-ptag__val { display: flex; align-items: baseline; gap: 7px; margin-top: 5px; }
 .purelane .pl-ptag__val strong { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -.02em; color: var(--pl-surface); line-height: 1; }

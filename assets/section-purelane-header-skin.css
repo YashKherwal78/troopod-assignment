@@ -1,0 +1,46 @@
+/* Visual re-skin of Dawn's real header (search/cart/menu/account all stay
+   Dawn's real, working implementation — only appearance changes) to match
+   the prototype's floating glass-pill nav. Loaded by header.liquid only. */
+.header-wrapper {
+  position: sticky;
+  top: 14px;
+  z-index: 50;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 14px;
+}
+.header-wrapper .header {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  background: linear-gradient(158deg, rgba(255, 255, 255, .80), rgba(236, 230, 247, .56) 58%, rgba(222, 212, 240, .50));
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(75, 58, 143, .16);
+  border-radius: 999px;
+  box-shadow: 0 22px 54px rgba(58, 44, 112, .13);
+  padding: 8px 18px;
+}
+.header-wrapper .header__heading-link .h2,
+.header-wrapper .header__heading-link {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  font-size: 16.5px;
+  color: #17102b;
+}
+.header-wrapper .list-menu--inline {
+  gap: 26px;
+}
+.header-wrapper .header__menu-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(36, 26, 61, .78);
+}
+.header-wrapper .header__icon {
+  color: rgba(36, 26, 61, .78);
+}
+.header-wrapper .header__icon:hover {
+  color: #17102b;
+}
