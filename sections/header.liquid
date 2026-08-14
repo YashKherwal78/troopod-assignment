@@ -209,7 +209,7 @@
           <span class="pl-brand-fallback">
             <span class="pl-brand-fallback__mark">{{ 'icon-leaf-outline.svg' | inline_asset_content }}</span>
             <span class="pl-brand-fallback__txt">
-              <span class="pl-brand-fallback__n1">{{ shop.name }}</span>
+              <span class="pl-brand-fallback__n1">{{ section.settings.pl_brand_name | default: shop.name }}</span>
               <span class="pl-brand-fallback__n2">Clean, simply</span>
             </span>
           </span>
@@ -258,7 +258,7 @@
           <span class="pl-brand-fallback">
             <span class="pl-brand-fallback__mark">{{ 'icon-leaf-outline.svg' | inline_asset_content }}</span>
             <span class="pl-brand-fallback__txt">
-              <span class="pl-brand-fallback__n1">{{ shop.name }}</span>
+              <span class="pl-brand-fallback__n1">{{ section.settings.pl_brand_name | default: shop.name }}</span>
               <span class="pl-brand-fallback__n2">Clean, simply</span>
             </span>
           </span>
@@ -517,6 +517,12 @@
   "class": "section-header",
   "max_blocks": 3,
   "settings": [
+    {
+      "type": "text",
+      "id": "pl_brand_name",
+      "label": "Brand name override",
+      "info": "Shown in the header instead of your store's account name (Settings → Store details), without needing to rename your Shopify account. Leave blank to use your store name."
+    },
     {
       "type": "select",
       "id": "logo_position",
