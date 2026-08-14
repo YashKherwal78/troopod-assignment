@@ -1,12 +1,26 @@
+/* The reference's header is position:fixed (never occupies document flow,
+   floats over a min-height:100svh hero, padding-top:150px clears it
+   visually). Dawn's header is a normal in-flow block (even with
+   sticky_header_type), so it was already pushing the hero down by its own
+   ~67-104px before this section's own padding-top even started -- min-
+   height:90svh/padding-top:96px were guessed to compensate and undershot,
+   leaving the hero's bottom-anchored content noticeably lower (and the
+   perceived "empty space" bigger) than the reference. Dawn already tracks
+   the real rendered header height in --header-height (sections/header.liquid
+   sets it on <html> and keeps it live across breakpoints/resize), so
+   subtracting that from 100svh reproduces the reference's available height
+   exactly instead of guessing a fixed svh number. */
 .purelane.pl-hero {
   position: relative;
-  min-height: 90svh;
+  min-height: calc(100svh - var(--header-height, 0px));
   display: flex;
   align-items: flex-end;
-  padding: 96px 0 var(--pl-sec-y);
+  padding: 150px 0 var(--pl-sec-y);
   background: transparent;
   overflow: hidden;
 }
+@media (max-width: 900px) { .purelane.pl-hero { padding-top: 132px; } }
+@media (max-width: 760px) { .purelane.pl-hero { padding-top: 118px; } }
 .purelane .pl-hero__grid {
   width: 100%;
   position: relative;

@@ -12,7 +12,7 @@
         "promise-3": { "type": "promise", "settings": { "icon": "no-chem", "label": "Zero harsh\nchemicals" } },
         "stage-1": { "type": "stage", "settings": { "label": "Single bottle", "placeholder_count": 1, "price": 200, "products": ["tap-cleaner-limescale-remover"] } },
         "stage-2": { "type": "stage", "settings": { "label": "Any 2 products", "placeholder_count": 2, "price": 349, "products": ["tap-cleaner-limescale-remover", "non-toxic-toilet-cleaner"] } },
-        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products", "placeholder_count": 3, "price": 499, "products": ["foaming-kitchen-cleaner", "organic-dishwash-gel", "tap-cleaner-limescale-remover"] } }
+        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products", "placeholder_count": 3, "price": 499, "products": ["tap-cleaner-limescale-remover", "non-toxic-toilet-cleaner", "purelane-complete-home-deep-clean-multi-surface-concentrated-foaming-spray-kit-with-reusable-trigger-bottle-and-refill-pouch"] } }
       },
       "block_order": ["promise-1", "promise-2", "promise-3", "stage-1", "stage-2", "stage-3"],
       "settings": {
