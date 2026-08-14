@@ -20,7 +20,13 @@
   background: linear-gradient(160deg, rgba(255, 255, 255, .60), rgba(236, 230, 247, .42));
   border: 1px solid rgba(75, 58, 143, .10);
 }
-.purelane .pl-card__shot img { max-height: 100%; width: auto; object-fit: contain; }
+/* width:100% (not auto) is required here: the real product <img> carries a
+   `sizes` attribute for responsive srcset selection, and per spec, `sizes`
+   drives the used width whenever CSS width computes to auto -- silently
+   overriding max-height/object-fit and blowing the image out of this fixed-
+   height box. width:100% + object-fit:contain lets object-fit do the actual
+   scaling instead. */
+.purelane .pl-card__shot img { width: 100%; height: 100%; object-fit: contain; }
 .purelane .pl-card__noimg {
   width: 42px; height: 42px; color: rgba(75, 58, 143, .3);
 }

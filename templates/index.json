@@ -10,9 +10,9 @@
         "promise-1": { "type": "promise", "settings": { "icon": "leaf", "label": "Plant\npowered" } },
         "promise-2": { "type": "promise", "settings": { "icon": "shield", "label": "Safe for\nkids & pets" } },
         "promise-3": { "type": "promise", "settings": { "icon": "no-chem", "label": "Zero harsh\nchemicals" } },
-        "stage-1": { "type": "stage", "settings": { "label": "Single bottle", "placeholder_count": 1, "price": 200 } },
-        "stage-2": { "type": "stage", "settings": { "label": "Any 2 products", "placeholder_count": 2, "price": 349 } },
-        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products", "placeholder_count": 3, "price": 499 } }
+        "stage-1": { "type": "stage", "settings": { "label": "Single bottle", "placeholder_count": 1, "price": 200, "products": ["tap-cleaner-limescale-remover"] } },
+        "stage-2": { "type": "stage", "settings": { "label": "Any 2 products", "placeholder_count": 2, "price": 349, "products": ["tap-cleaner-limescale-remover", "non-toxic-toilet-cleaner"] } },
+        "stage-3": { "type": "stage", "settings": { "label": "Any 3 products", "placeholder_count": 3, "price": 499, "products": ["foaming-kitchen-cleaner", "organic-dishwash-gel", "tap-cleaner-limescale-remover"] } }
       },
       "block_order": ["promise-1", "promise-2", "promise-3", "stage-1", "stage-2", "stage-3"],
       "settings": {
@@ -99,14 +99,16 @@
     },
     "purelane_combos": {
       "type": "purelane-combos",
-      "settings": {}
+      "settings": {
+        "combos": ["combo-5tqmkenh", "combo-vjpsjgdk", "combo-vpdordi9", "combo-evkpevom", "combo-jd2t0tsl"]
+      }
     },
     "purelane_bundles": {
       "type": "purelane-bundles",
       "blocks": {
-        "tier-1": { "type": "tier", "settings": { "tag": "Starter", "qty": 2, "price": 349, "features": "Pick any two products\nFree shipping across India" } },
-        "tier-2": { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "price": 499, "highlight": true, "features": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India" } },
-        "tier-3": { "type": "tier", "settings": { "tag": "Whole home", "qty": 5, "price": 799, "features": "Pick any five products\nEvery room in one order\nFree shipping across India" } }
+        "tier-1": { "type": "tier", "settings": { "tag": "Starter", "qty": 2, "price": 349, "features": "Pick any two products\nFree shipping across India", "products": ["tap-cleaner-limescale-remover", "non-toxic-toilet-cleaner"] } },
+        "tier-2": { "type": "tier", "settings": { "tag": "Most popular", "qty": 3, "price": 499, "highlight": true, "features": "Pick any three products\nCovers kitchen and laundry\nFree shipping across India", "products": ["foaming-kitchen-cleaner", "organic-dishwash-gel", "tap-cleaner-limescale-remover"] } },
+        "tier-3": { "type": "tier", "settings": { "tag": "Whole home", "qty": 5, "price": 799, "features": "Pick any five products\nEvery room in one order\nFree shipping across India", "products": ["foaming-kitchen-cleaner", "natural-herbal-floor-cleaner", "gentle-hydrating-liquid-handwash", "non-toxic-laundry-detergent", "washing-machine-cleaner-descaler"] } }
       },
       "block_order": ["tier-1", "tier-2", "tier-3"],
       "settings": {}
@@ -116,12 +118,15 @@
       "settings": {
         "kicker": "Bestsellers",
         "heading": "Loved by 30,000 homes",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "collection": "bestsellers-demo"
       }
     },
     "purelane_range": {
       "type": "purelane-range",
-      "settings": {}
+      "settings": {
+        "collection": "full-range"
+      }
     },
     "purelane_whybundles": {
       "type": "purelane-whybundles",
@@ -137,10 +142,10 @@
     "purelane_categories": {
       "type": "purelane-categories",
       "blocks": {
-        "cat-1": { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more", "placeholder_art": "kitchen" } },
-        "cat-2": { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect", "placeholder_art": "toilet" } },
-        "cat-3": { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash", "placeholder_art": "laundry" } },
-        "cat-4": { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale", "placeholder_art": "tap" } }
+        "cat-1": { "type": "category", "settings": { "title": "Kitchen bundle", "subtitle": "Grease, dishes & more", "placeholder_art": "kitchen", "collection": "kitchen-bundle" } },
+        "cat-2": { "type": "category", "settings": { "title": "Bathroom bundle", "subtitle": "Deep clean & disinfect", "placeholder_art": "toilet", "collection": "bathroom-bundle" } },
+        "cat-3": { "type": "category", "settings": { "title": "Laundry bundle", "subtitle": "Softer, fresher wash", "placeholder_art": "laundry", "collection": "laundry-bundle" } },
+        "cat-4": { "type": "category", "settings": { "title": "Hard water bundle", "subtitle": "Melt away limescale", "placeholder_art": "tap", "collection": "hard-water-bundle" } }
       },
       "block_order": ["cat-1", "cat-2", "cat-3", "cat-4"],
       "settings": {}

@@ -6,7 +6,7 @@
     { "key": "title", "name": "Title", "type": "single_line_text_field", "required": true },
     { "key": "tag", "name": "Flag (e.g. \"Most popular\")", "type": "single_line_text_field", "required": false },
     { "key": "save_label_override", "name": "Save badge override", "type": "single_line_text_field", "required": false, "description": "Leave blank to auto-compute \"You save ₹X\" from product prices. Use for special copy like \"Biggest saving\"." },
-    { "key": "products", "name": "Products included", "type": "list.product_reference", "required": true, "validations": { "min": 2, "max": 5 } },
+    { "key": "products", "name": "Products included", "type": "list.product_reference", "required": true },
     { "key": "benefit_lines", "name": "Per-product benefit captions", "type": "list.single_line_text_field", "required": false, "description": "Optional. If provided, must have the same number of lines as Products included, in the same order." },
     { "key": "description", "name": "Description", "type": "multi_line_text_field", "required": true },
     { "key": "price", "name": "Bundle price", "type": "number_decimal", "required": true },
